@@ -43,8 +43,20 @@
                             oInp.innerHTML = "<br>Touch moved (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";  
                                     break;  
                       case "onDblClick":  
-                        console.log("onDblClick") ;
-                       break;  
+                            console.log("onDblClick") ;
+                                break;  
+                      case "mousemove":  
+                            oInp.innerHTML = "Touch mousemove (" + event.clientX + "," + event.clientY + ")";  
+                            console.log("mousemove") 
+                            break;  
+                        case "click":  
+                            oInp.innerHTML = "Touch click (" + event.clientX + "," + event.clientY + ")"; 
+                            console.log("click") 
+                            break;  
+                        case "mousedown":  
+                            oInp.innerHTML = "Touch mousedown (" + event.clientX + "," + event.clientY + ")"; 
+                            console.log("mousedown") 
+                            break;  
                     }  
                     
                 }  
