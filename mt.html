@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>meta demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+       
+
+    </head>
+    <body>
+    <div id="container" >
+        <div id="inp"></div>
+    </div>
+    <script >
+         function load (){
+             var swip= 'ontouchmove' in window ? 'touchmove' : 'mousemove';
+             var tap= 'ontouchend' in window ? 'touchend' : 'click';  
+              var mts= 'touchstart' in window ? 'touchstart' : 'mousedown';
+           
+            document.addEventListener(swip,touch, false);  
+            document.addEventListener(tap,touch, false);  
+            document.addEventListener(mts,touch, false);  
+                
+                function touch (event){  
+                    var event = event || window.event;  
+                     console.log(event.type);
+                    var oInp = document.getElementById("inp");  
+                    switch(event.type){  
+                        
+                        case "touchstart":  
+                            oInp.innerHTML = "Touch started (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")"; 
+                            console.log("touchstart") 
+                            break;  
+                        case "touchend":  
+                            oInp.innerHTML = "<br>Touch end (" + event.changedTouches[0].clientX + "," + event.changedTouches[0].clientY + ")";  
+                            console.log("touchend") 
+                            break;  
+                        case "touchmove":  
+                            event.preventDefault();  
+                            console.log("touchmove") 
+                            oInp.innerHTML = "<br>Touch moved (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";  
+                                    break;  
+                      case "onDblClick":  
+                        console.log("onDblClick") ;
+                       break;  
+                    }  
+                    
+                }  
+            }  
+        window.addEventListener('load',load, false);  
+    </script
+    </body>
+</html>
