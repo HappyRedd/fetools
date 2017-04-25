@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>canvasMouseEvent</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+
+ <style type="text/css">
+            canvas {
+                border: 1px solid black;
+            }
+
+        </style>
+    </head>
+    <body style="background:#eeeeee;" onload="init();">
+        <canvas id="canvas02" width="800" height="550" style="z-index:100;display:block;position:absolute;"></canvas>
+    </body>
+    <script type="text/javascript">
+
+var canvas,ctx,mouseX = 999, mouseY = 999,bubbles = new Array;
+var num = Math.floor(Math.random()*30-10)+10;
+
+function init(){
+    canvas = document.getElementById('canvas02');
+    ctx = canvas.getContext('2d');
+    
+    for(var i=0; i < num; i++){
+        bubbles[i] = {
+        x: Math.floor(Math.random()*canvas.width),
+        y : Math.floor(Math.random()*canvas.height),
+        r : Math.floor(Math.random()*60-10)+10,
+        mouse: false,
+        }
+    }
+    
+    drawCanvas();
+    canvas.addEventListener('mousemove',updateCanvas,false);
+    canvas.addEventListener('click',popBubble,false);
+    
+    
+}
+
+function findOffset(obj) {
+    var curX = curY = 0;
+    if (obj.offsetParent) {
+        do {
+            curX += obj.offsetLeft;
+            curY += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+    return {x:curX,y:curY};
+    }
+}
+
+function updateCanvas(e){
+    var pos = findOffset(canvas);
+    
+    mouseX = e.pageX - pos.x;
+    mouseY = e.pageY - pos.y;
+    
+    
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawCanvas();
+}
+
+function popBubble(){
+    
+    for (var i = 0; i < bubbles.length; i++) {
+        if(bubbles[i].mouse == true){
+        
+            bubbles.splice(i,1);
+            break;
+            
+        }
+    }
+    
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawCanvas();
+}
+
+
+function drawCanvas() {
+    var bgGradient = ctx.createLinearGradient(0,0,0,canvas.height);
+    bgGradient.addColorStop(0,'rgb(0,150,255)');
+    bgGradient.addColorStop(1,'rgb(0,50,55)');
+    
+    ctx.fillStyle = bgGradient;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    
+    for(var i = 0; i < bubbles.length; i++){
+        
+        var gradient = ctx.createRadialGradient(bubbles[i].x-bubbles[i].r/3,bubbles[i].y-bubbles[i].r/2,
+                0,bubbles[i].x,bubbles[i].y,bubbles[i].r);
+        gradient.addColorStop(.2,'rgba(0,150,200,.2)');
+        gradient.addColorStop(1,'rgba(255,255,255,.5)');
+        
+        ctx.beginPath();
+        ctx.fillStyle = gradient;
+        ctx.arc(bubbles[i].x,bubbles[i].y,bubbles[i].r,0,Math.PI*2,false);
+        if(ctx.isPointInPath(mouseX,mouseY)){
+            bubbles[i].mouse = true;     
+        } else {
+            bubbles[i].mouse = false;
+        }
+        
+        ctx.fill();
+    }
+}
+ </script>
+</html>
+
+       
