@@ -33,23 +33,35 @@
         ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
         ctx.fillRect (0, 0, vWidth, vHeight);
 
-        ctx.beginPath();
-        ctx.arc(70, 80, 10, 0, 2 * Math.PI, false);
-        ctx.fill();
+      function GetRandom(Min,Max) {   
+        var Range = Max - Min;   
+        var Rand = Math.random();   
+        return(Min + Math.round(Rand * Range));   
+        }  
 
-
-        function getClientR(event){
-         //event 兼容处理
-          event = event||window.event; 
-            return {
-            x: event.clientX,
-            y: event.clientY
-      };
-        canvas.addEventListener("click", function(event){
-            getClientR(event);
-            console.log(event.x);
-        });
-        
-    </script
+        function drawCircle(ctx,offX,offY){
+            ctx.beginPath();
+            ctx.arc(offX, offY, 10, 0, 2 * Math.PI, false);
+            ctx.fill();
+        }
+    
+    window.onload = function(){
+       
+       
+      
+      /*  for(var i=0;i<10;i++){
+            var offX = GetRandom(0,vWidth);
+            var offY = GetRandom(0,vHeight);
+            drawCircle(ctx,offX,offY);
+        }*/
+        var i = 0;
+        do{
+            var offX = GetRandom(0,vWidth);
+            var offY = GetRandom(0,vHeight);
+            drawCircle(ctx,offX,offY);
+            i++;
+        }while(i<20);
+    }
+    </script>
     </body>
 </html>
