@@ -1,6 +1,7 @@
 # 前端常用工具及经验snippets
 ## head meta 常用标签及属性[an example](https://github.com/HappyRedd/fetools/blob/master/meta.html "meta") inline link.
 ## 通过 XHR 加载图片[an example](https://github.com/HappyRedd/fetools/blob/master/imgAjaxLoad.js) inline link.
+## rem适配问题的实现[an example](https://github.com/HappyRedd/fetools/blob/master/rem.md)inline link.
 ## 避免全局查找
 在一个函数中会用到全局对象存储为局部变量来减少全局查找，因为访问局部变量的速度要比访问全局变量的速度更快些
 ```
