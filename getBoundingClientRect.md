@@ -35,3 +35,45 @@ IE67的left、top会少2px,并且没有width、height属性。
     console.log("top:" + test.top + ", right:" + test.right + ", bottom:" + test.bottom + ", left:" + test.left);
 </script>
 ```
+## 扩展
+## 获得的坐标值相对于body时实现方法
+```
+      function getClientR(event){
+         //event 兼容处理
+          event = event||window.event; 
+            return {
+            x: event.clientX,
+            y: event.clientY
+      };
+     
+        }
+         canvas.addEventListener("click", function(event){
+           getClientR(event);
+            console.log(event.x);
+            
+        });
+```
+## 当需求为获得的坐标值相对于某一对象时，用： 
+```
+function getObjPos(event,id){
+ 
+    //获得对象相对于页面的横坐标值；id为对象的id 
+    var thisX = document.getElementById(id).offsetLeft;
+ 
+    //获得对象相对于页面的横坐标值； 
+    var thisY = document.getElementById(id).offsetTop;
+ 
+    //获得页面滚动的距离； 
+    //注：document.documentElement.scrollTop为支持非谷歌内核；document.body.scrollTop为谷歌内核 
+    var thisScrollTop = document.documentElement.scrollTop + document.body.scrollTop;
+ 
+    event = event||window.event; 
+    //获得相对于对象定位的横标值 = 鼠标当前相对页面的横坐标值 - 对象横坐标值；
+ 
+    x = event.clientX - thisX;
+ 
+    //获得相对于对象定位的纵标值 = 鼠标当前相对页面的纵坐标值 - 对象纵坐标值 + 滚动条滚动的高度； 
+    y = event.clientY - thisY + thisScrollTop; 
+ 
+}
+```
