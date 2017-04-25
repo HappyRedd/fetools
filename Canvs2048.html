@@ -1,0 +1,633 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>2048小游戏</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+	<style>
+		html,body{
+			width:100%;
+			margin:0;
+			padding:0;
+		}
+		#scoreBoard{
+			width:100%;
+			text-align: center;
+			font-size: 15px;
+			font-weight: bold;
+		}
+		#scoreBoard .title{
+			color:#666;
+		}
+		#score{
+			color:#ff6633;
+		}
+		#canvas{
+			/*background-image: url("images/background1.png");*/
+			position: absolute;
+			left:0;top:0;right:0;bottom:0;
+			margin:auto;
+		}
+		#again{
+			position: absolute;
+			z-index:2;
+			bottom:0;
+			width:100%;
+			text-align: center;
+		}
+		#again input{
+			width:280px;
+			height:40px;
+			color:white;
+			border: 0;
+			background-color: #ff6633;
+		}
+	</style>
+	
+</head>
+<body>
+	<div id="content">
+		<div id="scoreBoard"><br>
+			<span class="title">分数：</span><span id="score"> 0</span>
+		</div>
+		<div id="Game">
+			<canvas id="canvas">您的浏览器不支持canvas</canvas>
+		</div>	
+		<div id="again">
+			<input type=button value="再 玩 儿 一 次" id="moreTime">
+		</div>
+	</div>
+
+	<script>
+		/**
+		 *animation.js
+		 * redefine requestAnimationFrame
+		 * @return requestAnimationFrame function 
+		 */
+		window.requestAnimationFrame = (function(){
+			return window.requestAnimationFrame      ||
+				   window.webkitRequestAnimationFrame||
+				   window.mozRequestAnimationFrame   ||
+				   function(callback){
+						window.setTimeout(callback,10);
+				   };
+		})();
+
+
+		/**
+		*img.js
+		*/
+		//图片对象
+		var Img = (function(){
+			function obj(position,value){
+				var me = this;
+				me.colors = ["#EEE4DA","#EFE0CB","#F3B079","#F59565","#F75E3E","#FF6600","#EDCE71","#EDCD60","#FFCC33","#FF6633","#FFFF00"];
+				me.txtColors = ["#666","#666","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff"];
+				me.sPosition = position; //图片开始的位置
+				me.ePosition = {x:null,y:null};//图片移动的目标位置
+				me.step = 0;
+				me.arrived = false;//false表示需要移动，true表示不需要再移动
+				me.value = value;
+				me.img = new Image();
+				me.img.src = "images/" + me.value + ".png";
+			}
+			//按坐标绘制图片,参数：ctx为canvas上下文; width:图片宽度，height:图片高度
+			obj.prototype.drawByPos = function(ctx,width,height){
+				var me = this;
+				var x = me.sPosition.x * width + 15, 
+					y = me.sPosition.y *height + 15;
+				ctx.fillStyle = me.colors[me.value];
+				ctx.fillRect(x, y , width - 10 ,height - 10);
+				me.drawText(ctx, width, height, x, y);
+			};
+			obj.prototype.drawText = function(ctx,width,height,x,y){
+				var me = this;
+				ctx.fillStyle = me.txtColors[me.value];
+				ctx.font = width * 0.3 + "px sans-serif";
+				ctx.textAlign = "center";
+				ctx.textBaseline = "middle";
+				ctx.fillText(Math.pow(2,me.value),x + width * 0.4, y + height * 0.4 );
+			};
+			//改变图片位置
+			obj.prototype.move = function(ctx,width,height,der){
+				var me = this,
+					x = me.sPosition.x * width + 15,
+					y = me.sPosition.y * height + 15;	
+				me.step += 20;
+				switch(der){
+				case 37:{//向左,x减小		
+					x = x - me.step;
+					if(x <= me.ePosition.x * width + 15){
+						x = me.ePosition.x * width + 15;
+						me.sPosition.x = 0;
+						me.step = 0;
+						me.arrived = true;
+					}	
+				}break;
+				case 38:{//向上,y减小		
+					y = y - me.step;
+					if(y <= me.ePosition.y * height + 15){
+						y = me.ePosition.y * height + 15;
+						me.sPosition.y = 0;
+						me.step = 0;
+						me.arrived = true;
+					}	
+				}break;
+				case 39:{//向右,x增加		
+					x = x + me.step;
+					if(x >= me.ePosition.x * width + 15){
+						x = me.ePosition.x * width + 15;
+						me.sPosition.x = me.ePosition.x;
+						me.step = 0;
+						me.arrived = true;
+					}	
+				}break;
+				case 40:{//向下,y增加		
+					y = y + me.step;
+					if(y >= me.ePosition.y * height + 15){
+						y = me.ePosition.y * height + 15;
+						me.sPosition.y = me.ePosition.y;
+						me.step = 0;
+						me.arrived = true;
+					}				
+				}break;
+				}
+				ctx.fillStyle = me.colors[me.value];
+				ctx.fillRect( x, y, width - 10 ,height - 10);
+				me.drawText(ctx, width, height, x, y);
+			};
+			return obj;
+		})();
+
+
+		//背景对象
+		var Background = (function(){
+			function obj(){
+			}
+			obj.prototype.draw = function(ctx,cvs){
+				ctx.fillStyle = "#BCAD9D";
+				ctx.fillRect(0,0,gl.cvs.width,gl.cvs.height);
+				this.addRect(ctx,cvs);
+			};
+			obj.prototype.addRect = function(ctx,cvs){
+				gl.stdWidth = (cvs.width / 4 - 5 ) | 0;
+				gl.stdHeight = gl.stdWidth;
+				for(var i = 0; i < 4; i++){
+					for(var j = 0; j < 4; j++){
+						ctx.fillStyle = "#CDBFB5";
+						ctx.fillRect(i * gl.stdWidth + 15,j * gl.stdHeight + 15,gl.stdWidth-10,gl.stdHeight-10);
+					}
+				}		
+			};
+			return obj;
+		})();
+
+
+		/**
+		*handle.js
+		*/
+
+		//产生一个新方块儿，参数为方块儿的值
+		function getNewData(value){
+			var xx = (Math.random() * 40 | 0 ) % 4;
+			var yy = (Math.random() * 40 | 0 ) % 4;
+			if(!gl.map[xx][yy].Img){
+				gl.map[xx][yy].value = value;
+				gl.map[xx][yy].Img = new Img({x:xx,y:yy},value);		
+				gl.map[xx][yy].Img.drawByPos(gl.ctx,gl.stdWidth, gl.stdHeight);
+			}else{
+				getNewData(value);
+			}
+		}
+
+		//画背景
+		function drawBack(){
+			var back = new Background();
+			back.draw(gl.ctx,gl.cvs);
+		}
+
+		//创建4 * 4地图
+		function initMap(){
+			gl.map = [];
+			gl.gameScore = 0;
+			gl.gameover = false;
+			document.getElementById("score").innerHTML = gl.gameScore;
+			for(var i = 0; i < 4; i++){
+				gl.map[i] = new Array();
+				for(var j = 0; j < 4; j++){
+					gl.map[i][j] = new Object();
+					gl.map[i][j].value = 0;
+					gl.map[i][j].flag = false;//标记是否合并过
+				}
+			}
+			drawBack();
+			getNewData(1);
+			getNewData(1);
+		}
+
+
+		//查询已有方块儿
+		function searchRect(der){
+			gl.queue.length = 0;
+			for(var i = 0; i < 4; i++){
+				for(var j = 0; j < 4; j++){
+					if(gl.map[i][j].Img){
+						gl.map[i][j].Img.move(gl.ctx,gl.stdWidth, gl.stdHeight,der);
+						gl.queue.push(gl.map[i][j].Img);
+					}
+				}
+			}
+		}
+
+		//检查队列里的方块儿是否都移动完成
+		function checkQueue(){
+			for(var i = 0, len = gl.queue.length; i < len; i++){
+				if(!gl.queue[i].arrived){
+					return false; //队列里还有未完成的方块儿
+				}
+			}
+			return true;
+		}
+
+		//移动完成后，重绘地图
+		function reDrawMap(){
+			gl.ctx.clearRect(0,0,gl.cvs.width,gl.cvs.height);
+			var back = new Background();
+				back.draw(gl.ctx,gl.cvs);
+			for(var m = 0; m < 4; m++){
+				for(var p = 0; p < 4; p++){	
+					gl.map[m][p].flag = false;		
+					if(gl.map[m][p].value > 0){			
+						gl.map[m][p].Img = new Img({x:m,y:p},gl.map[m][p].value);
+						gl.map[m][p].Img.drawByPos(gl.ctx,gl.stdWidth, gl.stdHeight);
+					}else{
+						if(gl.map[m][p].Img){
+							delete gl.map[m][p].Img;
+						}
+					} 
+				}
+			}
+			document.getElementById("score").innerHTML = gl.gameScore;
+		}
+
+
+		//设置方块儿终点坐标
+		function setOldPos(i,j,ki,kj){
+			gl.map[i][j].value = 0;
+			gl.map[i][j].Img.ePosition.x = ki;
+			gl.map[i][j].Img.ePosition.y = kj;	
+		}
+
+		//向上运动时，遍历地图，寻找方块儿的终点目标(img.ePosition)，以便移动,参数:test用于标记是否需要移动
+		function searchMapUp(test){
+			var flagMove = false;
+			for(var i = 0; i < 4; i++){
+				for(var j = 0; j < 4; j++){
+					if(gl.map[i][j].value > 0 ){//方块儿有值时				
+						var t = gl.map[i][j].value;
+						if(j == 0){
+							setOldPos(i,j,i,j);
+							gl.map[i][j].value = t;
+						}
+						for(var k = j - 1; k >= 0; k--){				
+							if(gl.map[i][k].value > 0){//当上一个方块儿有值时
+								//当方块儿的值与上一个方块儿的值相等时,合并
+								if(gl.map[i][k].value == t && !gl.map[i][k].flag){
+									if(test == 1){ //若只是检测能否移动，不改变终点目标
+										setOldPos(i,j,i,k);
+										gl.gameScore += Math.pow(2,gl.map[i][k].value);
+										gl.map[i][k].value++;	
+										gl.map[i][k].flag = true;		
+										if(gl.map[i][k].value == 11)//出现2048游戏通关
+											gl.gameWin = true;		
+									}
+									flagMove = true;						
+								}else{//上方有方块儿，但2个方块儿的值不相同
+									if(test == 1){
+										setOldPos(i,j,i,k+1);
+										gl.map[i][k+1].value = t;
+									}								
+									if(j != k + 1)
+										flagMove = true;
+								}
+								break;
+							}
+							if(k == 0){
+								if(test == 1){
+									setOldPos(i,j,i,k);
+									gl.map[i][k].value = t;
+								}
+								flagMove = true;
+							}					
+						}
+					}
+				}
+			}
+			return flagMove;
+		}
+
+		//向下运动时
+		function searchMapDown(test){
+			var flagMove = false;
+			for(var i = 0; i < 4; i++){
+				for(var j = 3; j >= 0; j--){
+					if(gl.map[i][j].value > 0){				
+						var t = gl.map[i][j].value;
+						if(j == 3){
+							setOldPos(i,j,i,j);gl.map[i][j].value = t;
+						}
+						for(var k = j + 1; k < 4; k++){					
+							if(gl.map[i][k].value > 0){
+								if(gl.map[i][k].value == t && !gl.map[i][k].flag){
+									if(test == 1){
+										setOldPos(i,j,i,k);
+										gl.gameScore += Math.pow(2,gl.map[i][k].value);
+										gl.map[i][k].value++;	
+										gl.map[i][k].flag = true;	
+										if(gl.map[i][k].value == 11)//出现2048游戏通关
+											gl.gameWin = true;	
+									}	
+									flagMove = true;								
+								}else{
+									if(test == 1){
+										setOldPos(i,j,i,k-1);
+										gl.map[i][k-1].value = t;	
+									}
+									if(j != k - 1)
+										flagMove = true;	
+								}
+								break;
+							}
+							if(k == 3){
+								if(test == 1){
+									setOldPos(i,j,i,k);
+									gl.map[i][k].value = t;
+								}
+								flagMove = true;
+							}					
+						}
+					}
+				}
+			}
+			return flagMove;
+		}
+
+		//向左运动时
+		function searchMapLeft(test){
+			var flagMove = false;
+			for(var j = 0; j < 4; j++){
+				for(var i = 0; i < 4; i++){
+					if(gl.map[i][j].value > 0){				
+						var t = gl.map[i][j].value;
+						if(i == 0){
+							setOldPos(i,j,i,j);
+							gl.map[i][j].value = t;
+						}
+						for(var k = i - 1; k >= 0; k--){					
+							if(gl.map[k][j].value > 0){
+								if(gl.map[k][j].value == t && !gl.map[k][j].flag){
+									if(test == 1){
+										setOldPos(i,j,k,j);
+										gl.gameScore += Math.pow(2,gl.map[k][j].value);
+										gl.map[k][j].value++;	
+										gl.map[k][j].flag = true;
+										if(gl.map[k][j].value == 11)//出现2048游戏通关
+											gl.gameWin = true;
+									}
+									flagMove = true;
+								}else{
+									if(test == 1){
+										setOldPos(i,j,k+1,j);
+										gl.map[k+1][j].value = t;	
+									}
+									if(i != k + 1)
+										flagMove = true;
+								}
+								break;
+							}
+							if(k == 0){
+								if(test == 1){
+									setOldPos(i,j,k,j);
+									gl.map[k][j].value = t;
+								}
+								flagMove = true;
+							}					
+						}
+					}
+				}
+			}
+			return flagMove;
+		}
+
+		//向右运动时
+		function searchMapRight(test){
+			var flagMove = false;
+			for(var j = 0; j < 4; j++){
+				for(var i = 3; i >= 0; i--){
+					if(gl.map[i][j].value > 0){	
+						var t = gl.map[i][j].value;		
+						if(i == 3){
+							setOldPos(i,j,i,j);
+							gl.map[i][j].value = t;
+						}
+						for(var k = i + 1; k < 4; k++){					
+							if(gl.map[k][j].value > 0){
+								if(gl.map[k][j].value == t && !gl.map[k][j].flag){
+									if(test == 1){
+										setOldPos(i,j,k,j);
+										gl.gameScore += Math.pow(2,gl.map[k][j].value);
+										gl.map[k][j].value++;
+										gl.map[k][j].flag = true;			
+										if(gl.map[k][j].value == 11)//出现2048游戏通关
+											gl.gameWin = true;
+									}	
+									flagMove = true;									
+								}else{
+									if(test == 1){
+										setOldPos(i,j,k-1,j);
+										gl.map[k-1][j].value = t;	
+									}
+									if(i != k - 1)
+										flagMove = true;	
+								}
+								break;
+							}
+							if(k == 3){
+								if(test == 1){
+									setOldPos(i,j,k,j);
+									gl.map[k][j].value = t;
+								}
+								flagMove = true;
+							}					
+						}
+					}
+				}
+			}
+			return flagMove;
+		}
+
+
+		/**
+		*game.js
+		*/
+		//全局变量
+		var gl = {
+			cvs:null,
+			ctx:null,
+			stdWidth:0,//方块儿宽度
+			stdHeight:0,
+			gameScore:0,//游戏总分
+			gameWin:false,//是否通关
+			map:[],//地图
+			queue:[]//动画队列
+		};
+		(function(){
+			gl.cvs = document.getElementById('canvas');
+			gl.ctx = gl.cvs.getContext('2d');
+			setCanvasSize();
+			initMap();
+			//再玩儿一次
+			document.getElementById("moreTime").onclick = function(){
+				initMap();
+			};
+
+			document.onkeydown = function(event){
+				var e = event || window.event;
+				derection(e.keyCode);
+			};
+			
+			function setCanvasSize(){
+				/*if(window.innerWidth < window.innerHeight){
+					gl.cvs.width = window.innerWidth * 0.8;
+					gl.cvs.height = gl.cvs.width;
+				}else{
+					gl.cvs.height = window.innerHeight * 0.8;
+					gl.cvs.width = gl.cvs.height;
+				}
+				if(gl.cvs.width < 250){
+					gl.cvs.width = 250;
+					gl.cvs.height = 250;
+				}else if(gl.cvs.width > 400){
+					gl.cvs.width = 400;
+					gl.cvs.height = 400;
+				}*/
+				gl.cvs.width = 400;
+				gl.cvs.height = 400;
+			}
+			
+			function derection(der){
+				if(!checkQueue()) //一次滑动完成之前不能继续滑动
+					return;
+				gameover();//判断游戏是否结束
+				var flagMove = false;
+				switch(der){
+					case 37:flagMove = searchMapLeft(1);break;
+					case 38:flagMove = searchMapUp(1);break;
+					case 39:flagMove = searchMapRight(1);break;
+					case 40:flagMove = searchMapDown(1);break;
+					default:break;
+				}
+				if(flagMove)
+					slide(der);
+			}
+			function slide(der){
+				gl.ctx.clearRect(0,0,gl.cvs.width,gl.cvs.height);
+				var back = new Background();
+				back.draw(gl.ctx,gl.cvs);
+				searchRect(der);		
+				if(checkQueue()){			
+					if(!gameWin()){
+						reDrawMap();
+						getNewData(1);
+					}
+				}else{
+					window.requestAnimationFrame(function(){slide(der);});
+				}
+			}
+
+			function gameover(){
+				var f1 = searchMapLeft(0),
+					f2 = searchMapUp(0),
+					f3 = searchMapRight(0),
+					f4 = searchMapDown(0);
+				if( f1 || f2 || f3 || f4){			
+					return false;
+				}else{
+					document.onkeydown = null;
+					document.removeEventListener("touchstart",touchstart,false);
+					document.removeEventListener("touchmove",touchmove,false);
+					document.removeEventListener("touchend",touchend,false);
+					alert("游戏结束啦！");
+					return true;
+				}	
+			}
+
+			function gameWin(){
+				if(gl.gameWin){
+					alert("恭喜你，通过成功！！！");
+					document.onkeydown = null;
+					document.removeEventListener("touchstart",touchstart,false);
+					document.removeEventListener("touchmove",touchmove,false);
+					document.removeEventListener("touchend",touchend,false);
+					return true;
+				}				
+				return false;
+			}
+
+			
+			var startPos = {x:null,y:null}, endPos = {x: null,y: null};
+			document.addEventListener("touchstart",touchstart,false);
+			function touchstart(event){
+				var touch = event.touches[0];
+				startPos.x = touch.pageX;
+				startPos.y = touch.pageY;	
+				document.addEventListener("touchmove",touchmove,false);
+				document.addEventListener("touchend",touchend,false);
+			}	
+			
+			function touchmove(event){
+				var touch = event.touches[0];
+				endPos.x = touch.pageX;
+				endPos.y = touch.pageY;
+				computeDirection();
+			}
+			
+			function touchend(){
+				document.removeEventListener("touchmove",touchmove,false);
+				document.addEventListener("touchend",touchend,false);
+			}
+			
+			//计算滑动方向
+			function computeDirection(){
+				if(!checkQueue()) //一次滑动完成之前不能继续滑动
+					return;
+				gameover();//判断游戏是否结束
+				
+				var flagMove = false;
+				var x0 = endPos.x - startPos.x,
+					y0 = endPos.y - startPos.y;
+				if(x0 > 0 && Math.abs(x0) > Math.abs(y0) 
+				|| x0 > 0 && Math.abs(x0) > Math.abs(y0)){
+					flagMove = searchMapRight(1);//alert("right");
+					der = 39;
+				}else if(y0 < 0 && Math.abs(x0) < Math.abs(y0) 
+					  || y0 < 0 && Math.abs(x0) < Math.abs(y0)){
+					flagMove = searchMapUp(1);//alert("top");
+					der = 38;
+				}else if(x0 < 0 && Math.abs(x0) > Math.abs(y0) 
+					  || x0 < 0 && Math.abs(x0) > Math.abs(y0)){
+					flagMove = searchMapLeft(1);//alert("left");
+					der = 37;
+				}else if(y0 > 0 && Math.abs(x0) < Math.abs(y0) 
+						|| y0 > 0 && Math.abs(x0) < Math.abs(y0)){
+					flagMove = searchMapDown(1);//alert("down");
+					der = 40;
+				}
+				if(flagMove)
+					slide(der);
+			}
+		})();
+
+	</script>
+</body>
+</html>
