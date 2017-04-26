@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>canvas demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        body{background-color:#ffffff;margin:0;padding:0;
+            -webkit-touch-callout :none; -webkit-user-select: none;
+
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script >
+    window.onload = function(){
+        //获取视口宽度：window.innerWidth/Height
+        var vWidth = window.innerWidth;
+        var vHeight = window.innerHeight;
+        //获取canvas id
+        var canvas = document.getElementById("canvas");
+        //对canvas默认大小重置
+        canvas.width =vWidth;
+        canvas.height = vHeight;
+        //get Context
+        var ctx = canvas.getContext("2d");
+        //rect view by RGBA
+  /*      function drawBg(ctx){
+            ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+            ctx.fillRect (0, 0, vWidth, vHeight);
+        }*/
+        var ofont  = {
+            size:30,
+            left:200,
+            top:300,
+            w:null,
+            left2:200,
+            top2:600,
+            txt:"hello world!"
+
+        };
+
+        var text = new cText(ofont.left,ofont.top,ofont.txt,ofont.size);
+        var easing = 0.05;
+        var targetX = ofont.left2;
+                targetY =ofont.top2;
+
+
+        (function drawFrame(){
+            window.requestAnimationFrame(drawFrame, canvas);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            var vx = (targetX - text.left)*easing;
+            var vy = (targetY - text.top)*easing;
+
+            text.left += vx;
+            text.top += vy;
+            console.log(text.left);
+            console.log(text.top);
+            text.draw(ctx);
+        }())
+    }
+</script>
+<script src="js/mt.js"></script>
+<script src="js/font.js"></script>
+</body>
+</html>
