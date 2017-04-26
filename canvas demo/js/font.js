@@ -1,13 +1,19 @@
-function cText(oleft,otop,txt,size){
+function cText(oleft,otop,txt,size,tx,ty){
     this.left = oleft||0;
     this.top = otop||0;
     this.txt = txt||'请输入数据';
-    this.font = size||'"30px Arial";'
+    this.font = size||'"30px Arial";';
+    this.tx = tx||0;
+    this.ty = ty||0;
+
+
 }
 cText.prototype.draw = function(ctx){
     ctx.save();
+    ctx.translate(this.tx,this.ty);
     ctx.font= this.font;
     ctx.fillText( this.txt, this.font, this.left, this.top);
+    ctx.restore();
 };
 //动画兼容
 if(!window.requestAnimationFrame){

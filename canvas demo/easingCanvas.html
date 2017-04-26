@@ -38,30 +38,31 @@
         var ofont  = {
             size:30,
             left:200,
-            top:300,
+            top:100,
             w:null,
             left2:200,
-            top2:600,
+            top2:300,
             txt:"hello world!"
 
         };
 
-        var text = new cText(ofont.left,ofont.top,ofont.txt,ofont.size);
+        var text = new cText(ofont.left,ofont.top,ofont.txt,ofont.size,0,0);
         var easing = 0.05;
         var targetX = ofont.left2;
                 targetY =ofont.top2;
 
-
+       /* var targetX = canvas.width/2,
+                targetY = 300;*/
         (function drawFrame(){
+            if(text.tx>targetX-1) return;
             window.requestAnimationFrame(drawFrame, canvas);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            var vx = (targetX - text.left)*easing;
-            var vy = (targetY - text.top)*easing;
+            var vx = (targetX - text.tx)*easing;
+            var vy = (targetY - text.ty)*easing;
 
-            text.left += vx;
-            text.top += vy;
-            console.log(text.left);
-            console.log(text.top);
+            text.tx += vx;
+            text.ty += vy;
+            console.log( text.tx)
             text.draw(ctx);
         }())
     }
