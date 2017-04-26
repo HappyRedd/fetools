@@ -32,60 +32,23 @@
         //rect view by RGBA
         ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
         ctx.fillRect (0, 0, vWidth, vHeight);
-        var ball = {
-            left:vWidth/2,
-            top:vWidth/5,
-            r:vWidth/10
-        }
-        ctx.beginPath();
-        ctx.arc(ball.left, ball.top, ball.r, 0, 2 * Math.PI, false);
-        ctx.fill();
-
-        var mtX;
-        var mtY;
-           var x;
-           var y;
-        var tap= 'ontouchend' in window ? 'touchend' : 'click';  
-        function getInt(num,n){
-            return parseInt(num*Math.pow(10,n)+0.5,10)/Math.pow(10,n);
-        }
-        function getClientR(event){
-         //event 兼容处理
-          event = event||window.event; 
-           if(event.pageX || event.pageY){
-               x = event.pageX;
-               y = event.pageY;
-            
-           }else if(event.changedTouches[0].clientX ){
-               var tclientX = getInt(event.changedTouches[0].clientX,0);
-               var tclientY = getInt(event.changedTouches[0].clientY,0);
-                x = tclientX+document.body.scrollLeft+document.documentElement.scrollLeft;
-                y = tclientY+document.body.scrollTop+document.documentElement.scrollTop;
-                // x = event.changedTouches[0].clientX+document.body.scrollLeft+document.documentElement.scrollLeft;
-                //y = event.changedTouches[0].clientY+document.body.scrollTop+document.documentElement.scrollTop;
-               
-           }
-           else{
-             
-               x = event.clientX+document.body.scrollLeft+document.documentElement.scrollLeft;
-               y = event.clientY+document.body.scrollTop+document.documentElement.scrollTop;
-           }
-            
-           x -= canvas.offsetLeft;
-           y -= canvas.offsetTop;
-           
-            mtX = x;
-            mtY = y;
-        
-      };
-
-
+ 
         //设置字体样式
         ctx.font = "30px Courier New";
         //设置字体颜色
         ctx.strokeStyle = "blue";
         //从坐标点(50,50)开始绘制文字
         ctx.strokeText("CodePlayer+中文测试", 50, 50);
+
+
+
+        ctx.font="30px Arial";
+        var txt="Hello World!"
+        ctx.fillText("width:" + ctx.measureText(txt).width,100,400)
+         ctx.fillText("height:" + ctx.measureText(txt),100,500)
+         console.log(ctx.measureText(txt))
+        ctx.fillText(txt,100,300);
+
         window.onload = function(){
             canvas.addEventListener(tap, function(event){
             getClientR(event);
@@ -99,5 +62,6 @@
         }
         
     </script>
+    <script src="js/mt.js"></script>
     </body>
 </html>
