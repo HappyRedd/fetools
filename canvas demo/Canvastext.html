@@ -46,9 +46,9 @@
         var txt="Hello World!"
         ctx.fillText("width:" + ctx.measureText(txt).width,100,400)
          ctx.fillText("height:" + ctx.measureText(txt),100,500)
-         console.log(ctx.measureText(txt))
+        // console.log( ctx.TextHeight(txt))
         ctx.fillText(txt,100,300);
-
+       
         window.onload = function(){
             canvas.addEventListener(tap, function(event){
             getClientR(event);
