@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>canvas demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+       <style>
+      body{background-color:#ffffff;margin:0;padding:0;
+        -webkit-touch-callout :none; -webkit-user-select: none;
+    
+        overflow: hidden;
+        position: relative;
+}
+       </style>
+
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+    <script >
+        //获取视口宽度：window.innerWidth/Height
+        var vWidth = window.innerWidth;
+        var vHeight = window.innerHeight;
+        //获取canvas id
+        var canvas = document.getElementById("canvas");
+        //对canvas默认大小重置
+        canvas.width =vWidth;
+        canvas.height = vHeight;
+        //get Context
+        var ctx = canvas.getContext("2d");
+        //rect view by RGBA
+        function drawBg(ctx){
+            ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+            ctx.fillRect (0, 0, vWidth, vHeight);
+        }
+        var ofont  = {
+            size:30,
+            left:200,
+            top:600,
+            w:null,
+           left2:200,
+           top2:200
+
+        }
+        var isOPos = false;
+        var easing = 0.05;
+
+       function drawText(ctx){
+        ctx.font=ofont.size;
+        var txt="Hello World!"  
+        ofont.w = ctx.measureText(txt).width;
+        //console.log("aaa")
+        if(isOPos===false){
+            
+             ctx.fillText(txt,ofont.left,ofont.top);
+          
+        }else{
+           
+             ctx.fillText(txt,ofont.left2,ofont.top2);
+        }
+       }
+        window.onload = function(){
+            drawBg(ctx);
+            drawText(ctx);
+            canvas.addEventListener(tap, function(event){
+            getClientR(event);
+            
+            if((ofont.left<mtX)&&
+            (mtX<ofont.left+ofont.w)&&
+            (ofont.top-ofont.size/2<mtY)&&
+            (mtY<ofont.top)){
+               console.log(mtX)
+               isOPos = true;
+               ctx.clearRect(0,0,vWidth, vHeight);
+               drawBg(ctx);
+               drawText(ctx);
+               	(function drawFrame(){
+                    window.requestAnimationFrame(drawFrame, canvas);
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+
+                    //随着ball.x的增大， (targetX - ball.x)的值不断减小， 导致vx不打断减小
+                  
+                    var vy = ( ofont.top2 -  ofont.top)*easing;
+
+                   ofont.top += vy;
+                   
+
+                    ball.draw(context);
+		    }())
+            }
+            
+        });
+        }
+        
+    </script>
+    <script src="js/mt.js"></script>
+    </body>
+</html>
