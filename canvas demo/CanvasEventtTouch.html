@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>canvas demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+       <style>
+      body{background-color:#ffffff;margin:0;padding:0;
+        -webkit-touch-callout :none; -webkit-user-select: none;
+    
+        overflow: hidden;
+        position: relative;
+}
+       </style>
+
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+    <script >
+        //获取视口宽度：window.innerWidth/Height
+        var vWidth = window.innerWidth;
+        var vHeight = window.innerHeight;
+        //获取canvas id
+        var canvas = document.getElementById("canvas");
+        //对canvas默认大小重置
+        canvas.width =vWidth;
+        canvas.height = vHeight;
+        //get Context
+        var ctx = canvas.getContext("2d");
+        //rect view by RGBA
+        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+        ctx.fillRect (0, 0, vWidth, vHeight);
+        var ball = {
+            left:vWidth/2,
+            top:vWidth/5,
+            r:vWidth/10
+        }
+        ctx.beginPath();
+        ctx.arc(ball.left, ball.top, ball.r, 0, 2 * Math.PI, false);
+        ctx.fill();
+
+        var mtX;
+        var mtY;
+           var x;
+           var y;
+        var tap= 'ontouchend' in window ? 'touchend' : 'click';  
+        function getInt(num,n){
+            return parseInt(num*Math.pow(10,n)+0.5,10)/Math.pow(10,n);
+        }
+        function getClientR(event){
+         //event 兼容处理
+          event = event||window.event; 
+           if(event.pageX || event.pageY){
+               x = event.pageX;
+               y = event.pageY;
+            
+           }else if(event.changedTouches[0].clientX ){
+               var tclientX = getInt(event.changedTouches[0].clientX,0);
+               var tclientY = getInt(event.changedTouches[0].clientY,0);
+                x = tclientX+document.body.scrollLeft+document.documentElement.scrollLeft;
+                y = tclientY+document.body.scrollTop+document.documentElement.scrollTop;
+                // x = event.changedTouches[0].clientX+document.body.scrollLeft+document.documentElement.scrollLeft;
+                //y = event.changedTouches[0].clientY+document.body.scrollTop+document.documentElement.scrollTop;
+               
+           }
+           else{
+             
+               x = event.clientX+document.body.scrollLeft+document.documentElement.scrollLeft;
+               y = event.clientY+document.body.scrollTop+document.documentElement.scrollTop;
+           }
+            
+           x -= canvas.offsetLeft;
+           y -= canvas.offsetTop;
+           
+            mtX = x;
+            mtY = y;
+        
+      };
+        window.onload = function(){
+            canvas.addEventListener(tap, function(event){
+            getClientR(event);
+            if((ball.left-ball.r<mtX)&&
+            (mtX<ball.left+ball.r)&&
+            (ball.top-ball.r<mtY)&&
+            (mtY<ball.top+ball.r)){
+               console.log(mtX)
+            }
+        });
+        }
+        
+    </script
+    </body>
+</html>
