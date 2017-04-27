@@ -2,7 +2,7 @@ function cText(oleft,otop,txt,size,tx,ty){
     this.left = oleft||0;
     this.top = otop||0;
     this.txt = txt||'请输入数据';
-    this.font = size||'"30px Arial";';
+    this.font = size||"30px Arial";
     this.tx = tx||0;
     this.ty = ty||0;
     this.w = 100;
@@ -14,7 +14,8 @@ cText.prototype.draw = function(ctx){
     ctx.translate(this.tx,this.ty);
     ctx.font= this.font;
     ctx.measureText( this.txt).width= this.w;
-    ctx.fillText( this.txt, this.font, this.left, this.top);
+    ctx.textAlign="left";
+    ctx.fillText( this.txt, this.left, this.top);
     ctx.restore();
 };
 //动画兼容
@@ -43,6 +44,7 @@ function drawBg(ctx){
     ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
     ctx.fillRect (0, 0, vWidth, vHeight);
 }*/
+/*
 function roundedRect(ctx,cornerX, cornerY, width, height, cornerRadius) {
     if (width> 0) ctx.moveTo(cornerX + cornerRadius, cornerY);
     else  ctx.moveTo(cornerX - cornerRadius, cornerY);
@@ -65,3 +67,4 @@ function drawRoundedRect(ctx,strokeStyle,fillStyle,cornerX,cornerY,width,height,
     ctx.stroke();
     ctx.fill();
 }
+*/
