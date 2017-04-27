@@ -1,4 +1,4 @@
-function cText(oleft,otop,txt,size,tx,ty){
+function cText(oleft,otop,txt,size,tx,ty,sx,sy,isPress){
     this.left = oleft||0;
     this.top = otop||0;
     this.txt = txt||'请输入数据';
@@ -6,7 +6,9 @@ function cText(oleft,otop,txt,size,tx,ty){
     this.tx = tx||0;
     this.ty = ty||0;
     this.w = 100;
-
+    this.sx = sx;
+    this.sy = sy;
+    this.isPress= isPress;
 
 }
 cText.prototype.draw = function(ctx){
@@ -17,6 +19,73 @@ cText.prototype.draw = function(ctx){
     ctx.textAlign="left";
     ctx.fillText( this.txt, this.left, this.top);
     ctx.restore();
+};
+cText.prototype.toggleSelf=function(ctx){
+    console.log(ctx);
+    self = this;
+   // var isPress=false;
+
+    var easing = 0.05;
+    var targetX ;
+    var targetY ;
+    self.draw(ctx);
+    if(self.isPress==false){
+        targetX = self.left+  self.sx;
+        targetY =self.top+  self.sx;
+    }else{
+        targetX = self.left;
+        targetY =self.top;
+    }
+    canvas.addEventListener(tap, function(event){
+        console.log(canvas);
+        getClientR(event);
+        if((self.left+self.tx<mtX)&&
+            (mtX<self.left+self.w+self.tx )&&
+            (self.top-self.font/2+ self.ty<mtY)&&
+            (mtY<self.top+5+ self.ty)){
+            console.log(mtY);
+            if(self.isPress==false) {
+                (function drawFrame() {
+                    //if(isPos==true) return;
+                    if ((self.tx <- targetX/5) || (self.ty <- targetY/5)){
+                        self.isPress = true;
+                        return;
+                    }
+
+                    window.requestAnimationFrame(drawFrame, canvas);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    var vx = getInt((targetX - self.tx) * easing, 0);
+                    var vy = getInt((targetY - self.ty) * easing, 0);
+                    self.tx -= vx;
+                    self.ty -= vy;
+                    console.log( self.ty);
+
+                    self.draw(ctx);
+
+                }());
+            }else{
+                console.log(self.tx);
+                (function drawFrame() {
+
+                    if ((self.tx > 1) ||(self.ty >1)){
+                        self.isPress = false;
+                        return;
+                    }
+
+                    window.requestAnimationFrame(drawFrame, canvas);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    var vx = getInt((targetX - self.tx) * easing, 0);
+                    var vy = getInt((targetY - self.ty) * easing, 0);
+                    self.tx += vx;
+                    self.ty += vy;
+                    console.log(vx);
+
+                    self.draw(ctx);
+
+                }(event));
+            }
+        }
+    });
 };
 //动画兼容
 if(!window.requestAnimationFrame){
