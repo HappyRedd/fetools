@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>canvas demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        body{background-color:#ffffff;margin:0;padding:0;
+            -webkit-touch-callout :none; -webkit-user-select: none;
+
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script >
+    var mtX;
+    var mtY;
+    var tap= 'ontouchend' in window ? 'touchend' : 'click';
+    window.onload = function(){
+
+        //获取视口宽度：window.innerWidth/Height
+        var vWidth = window.innerWidth;
+        var vHeight = window.innerHeight;
+        //获取canvas id
+        var canvas = document.getElementById("canvas");
+        //对canvas默认大小重置
+        canvas.width =vWidth;
+        canvas.height = vHeight;
+        //get Context
+        var ctx = canvas.getContext("2d");
+        //rect view by RGBA
+        ctx.save();
+        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+        ctx.fillRect (0, 0, vWidth, vHeight);
+        ctx.restore();
+        var ofont  = {
+            size:30,
+            left:200,
+            top:400,
+            w:null,
+            left2:100,
+            top2:300,
+            txt:"hello world!"
+
+        };
+
+        var text = new cText(ofont.left,ofont.top,ofont.txt,ofont.size,0,0,150,10,false);
+        text.draw(ctx);
+
+
+        var text2 = new cText(100,300,"我是中国人",40,0,0,100,1,false);
+        text2.draw(ctx);
+
+
+        var easing = 0.05;
+        //text1
+        var targetX ;
+        var targetY ;
+        if(text.isPress==false){
+            targetX = text.left+  text.sx;
+            targetY =text.top+  text.sx;
+        }else{
+            targetX = text.left;
+            targetY =text.top;
+        }
+        //text2
+        var targetX2 ;
+        var targetY2 ;
+        if(text2.isPress==false){
+            targetX2 = text2.left+  text2.sx;
+            targetY2 =text2.top+  text2.sx;
+        }else{
+            targetX2 = text2.left;
+            targetY2 =text2.top;
+        }
+
+
+
+
+        canvas.addEventListener(tap, function(event){
+            console.log(canvas);
+            getClientR(event);
+            if((text.left+text.tx<mtX)&&
+                    (mtX<text.left+text.w+text.tx )&&
+                    (text.top-text.font/2+ text.ty<mtY)&&
+                    (mtY<text.top+5+ text.ty)){
+                console.log(mtY);
+                if(text.isPress==false) {
+                    (function drawFrame() {
+                        //if(isPos==true) return;
+                        if ((text.tx <- targetX/5) || (text.ty <- targetY/5)){
+                            text.isPress = true;
+                            return;
+                        }
+
+                        window.requestAnimationFrame(drawFrame, canvas);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        var vx = getInt((targetX - text.tx) * easing, 0);
+                        var vy = getInt((targetY - text.ty) * easing, 0);
+                        text.tx -= vx;
+                        text.ty -= vy;
+                        console.log( text.ty);
+                        drawBg(ctx,vWidth,vHeight);
+                        text.draw(ctx);
+                        text2.draw(ctx);
+                        drawRoundedRect(ctx,'blue',   'yellow',  vWidth/3.1,  vHeight/6,  150,  50, 0);
+                    }());
+                }else{
+                    console.log(text.tx);
+                    (function drawFrame() {
+
+                        if ((text.tx > 1) ||(text.ty >1)){
+                            text.isPress = false;
+                            return;
+                        }
+
+                        window.requestAnimationFrame(drawFrame, canvas);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        var vx = getInt((targetX - text.tx) * easing, 0);
+                        var vy = getInt((targetY - text.ty) * easing, 0);
+                        text.tx += vx;
+                        text.ty += vy;
+                        console.log(vx);
+                        drawBg(ctx,vWidth,vHeight);
+                        text.draw(ctx);
+                        text2.draw(ctx);
+                        drawRoundedRect(ctx,'blue',   'yellow',  vWidth/3.1,  vHeight/6,  150,  50, 0);
+                    }(event));
+                }
+            }
+
+
+
+
+            //text2
+            if((text2.left+text2.tx<mtX)&&
+                    (mtX<text2.left+text2.w+text2.tx )&&
+                    (text2.top-text.font/2+ text2.ty<mtY)&&
+                    (mtY<text2.top+5+ text2.ty)){
+                console.log(mtY);
+                if(text2.isPress==false) {
+                    (function drawFrame() {
+                        //if(isPos==true) return;
+                        if ((text2.tx <- targetX2/5) || (text2.ty <- targetY2/5)){
+                            text2.isPress = true;
+                            return;
+                        }
+
+                        window.requestAnimationFrame(drawFrame, canvas);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        var vx = getInt((targetX2 - text2.tx) * easing, 0);
+                        var vy = getInt((targetY2 - text2.ty) * easing, 0);
+                        text2.tx -= vx;
+                        text2.ty -= vy;
+                        console.log( text2.ty);
+                        drawBg(ctx,vWidth,vHeight);
+                        text.draw(ctx);
+                        text2.draw(ctx);
+                        drawRoundedRect(ctx,'blue',   'yellow',  vWidth/3.1,  vHeight/6,  150,  50, 0);
+                    }());
+                }else{
+                    console.log(text.tx);
+                    (function drawFrame() {
+
+                        if ((text2.tx > 1) ||(text.ty >1)){
+                            text2.isPress = false;
+                            return;
+                        }
+
+                        window.requestAnimationFrame(drawFrame, canvas);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        var vx = getInt((targetX2 - text2.tx) * easing, 0);
+                        var vy = getInt((targetY2 - text2.ty) * easing, 0);
+                        text2.tx += vx;
+                        text2.ty += vy;
+                        console.log(vx);
+                        drawBg(ctx,vWidth,vHeight);
+                        text.draw(ctx);
+                        text2.draw(ctx);
+                        drawRoundedRect(ctx,'blue',   'yellow',  vWidth/3.1,  vHeight/6,  150,  50, 0);
+                    }(event));
+                }
+            }
+            //text2 end
+        });
+        drawRoundedRect(ctx,'blue',   'yellow',  vWidth/3.1,  vHeight/6,  150,  50, 0);
+
+    }
+</script>
+<script src="js/mt.js"></script>
+<script src="js/font.js"></script>
+</body>
+</html>
