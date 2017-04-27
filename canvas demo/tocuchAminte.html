@@ -49,36 +49,71 @@
             txt:"hello world!"
 
         };
-        var isPos=false;
+        var isPress=false;
         var text = new cText(ofont.left,ofont.top,ofont.txt,ofont.size,0,0);
         var easing = 0.05;
-        var targetX = ofont.left2;
-        var targetY =ofont.top2;
+        var targetX ;
+        var targetY ;
         text.draw(ctx);
+        if(isPress==false){
+             targetX = ofont.left2;
+             targetY =ofont.top2;
+        }else{
+            targetX = ofont.left;
+            targetY =ofont.top;
+        }
 
-
-
+        //drawRoundedRect(ctx,strokeStyle,fillStyle,cornerX,cornerY,width,height,cornerRadius)
 
             canvas.addEventListener(tap, function(event){
                 getClientR(event);
-                if((200<mtX)&&
-                        (mtX<text.left+text.w)&&
-                        (text.top-text.font/2<mtY)&&
-                        (mtY<text.top+5)){
-                    (function drawFrame(){
-                        //if(isPos==true) return;
-                        if(-text.tx>targetX-1) return;
-                        window.requestAnimationFrame(drawFrame, canvas);
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        var vx = getInt((targetX - text.tx)*easing,0);
-                        var vy = getInt((targetY - text.ty)*easing,0);
-                        text.tx -= vx;
-                        text.ty -= vy;
-                        console.log( vx);
-                        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-                        ctx.fillRect (0, 0, vWidth, vHeight);
-                        text.draw(ctx);
-                    }())
+                if((text.left+text.tx<mtX)&&
+                        (mtX<text.left+text.w+text.tx )&&
+                        (text.top-text.font/2+ text.ty<mtY)&&
+                        (mtY<text.top+5+ text.ty)){
+                    console.log(mtY);
+                    if(isPress==false) {
+                        (function drawFrame() {
+                            //if(isPos==true) return;
+                            if ((-text.tx > targetX - 1) || (-text.ty > targetY - 1)){
+                                isPress = true;
+                                return;
+                            }
+
+                            window.requestAnimationFrame(drawFrame, canvas);
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            var vx = getInt((targetX - text.tx) * easing, 0);
+                            var vy = getInt((targetY - text.ty) * easing, 0);
+                            text.tx -= vx;
+                            text.ty -= vy;
+                            console.log(vx);
+                            ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+                            ctx.fillRect(0, 0, vWidth, vHeight);
+                            text.draw(ctx);
+
+                        }())
+                    }else{
+                        console.log(text.tx);
+                        (function drawFrame() {
+
+                            if ((text.tx > 1) ||(text.ty >1)){
+                                isPress = false;
+                                return;
+                            }
+
+                            window.requestAnimationFrame(drawFrame, canvas);
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            var vx = getInt((targetX - text.tx) * easing, 0);
+                            var vy = getInt((targetY - text.ty) * easing, 0);
+                            text.tx += vx;
+                            text.ty += vy;
+                            console.log(vx);
+                            ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+                            ctx.fillRect(0, 0, vWidth, vHeight);
+                            text.draw(ctx);
+
+                        }())
+                    }
                 }
             });
     }
