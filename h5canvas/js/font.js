@@ -17,7 +17,14 @@ cText.prototype.draw = function(ctx){
     ctx.font= this.font;
     ctx.measureText( this.txt).width= this.w;
     ctx.textAlign="left";
-    ctx.fillText( this.txt, this.left, this.top);
+    if(this.isPress==false){
+        ctx.fillText( this.txt, this.left, this.top);
+        this.isPress=true;
+    }else{
+        ctx.fillText( this.txt,this.sx,this.sy);
+        this.isPress=false;
+    }
+
     ctx.restore();
    console.log("x"+this.left)
    console.log("y"+this.top)
@@ -25,9 +32,9 @@ cText.prototype.draw = function(ctx){
 cText.prototype.getBounds = function(){
     return {
         x:  this.left,
-        y:  this.top,
+        y:  this.top-this.font/2,
         width: this.w,
-        height:   this.font,
+        height: this.font,
     };
 }
 //∂Øª≠ºÊ»›
@@ -79,8 +86,4 @@ function drawRoundedRect(ctx,strokeStyle,fillStyle,cornerX,cornerY,width,height,
 function drawBg(ctx,w,h){
     ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
     ctx.fillRect (0, 0, w, h);
-}
-window.utils.containsPoint = function(rect, x, y){
-    return !(x<rect.x || x>rect.x + rect.width ||
-    y<rect.y || y>rect.y + rect.height);
 }

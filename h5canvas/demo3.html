@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>canvas demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        body{background-color:#ffffff;margin:0;padding:0;
+            -webkit-touch-callout :none; -webkit-user-select: none;
+
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+    <script src="js/utils.js"></script>
+    <script src="js/mt.js"></script>
+    <script src="js/font.js"></script>
+
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script >
+    var mtX;
+    var mtY;
+    var tap= 'ontouchend' in window ? 'touchend' : 'click';
+
+
+    window.onload = function(){
+        var vWidth = window.innerWidth;
+        var vHeight = window.innerHeight;
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        //对canvas默认大小重置
+        canvas.width = vWidth;
+        canvas.height = vHeight;
+        //get Context
+        var mouse = utils.captureMouse(canvas);
+        var text = new cText(5,100,"马萌为生",30,0,0,250,100,false);
+        text.draw(ctx);
+        var text2 = new cText(200,300,"马萌为生2",30,0,0,150,400,false);
+        text2.draw(ctx);
+
+        canvas.addEventListener(tap, function(event){
+            if(utils.containsPoint(text.getBounds(), mouse.x, mouse.y)){
+                canvasApp(text);
+            }
+            if(utils.containsPoint(text2.getBounds(), mouse.x, mouse.y)){
+                canvasApp(text2);
+            }
+        }, false);
+
+
+        function canvasApp(obj) {
+            ctx.clearRect(0,0,vWidth,vHeight);
+            obj.draw(ctx);
+         
+        }
+
+
+        var obj=text.getBounds();
+        // drawRoundedRect(ctx,'blue',   'yellow',  obj.x,  obj.y,  obj.width,  obj.height, 0);
+    }
+
+</script>
+
+</body>
+</html>

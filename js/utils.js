@@ -171,12 +171,6 @@ window.utils.containsPoint = function(rect, x, y){
              y<rect.y || y>rect.y + rect.height);
 }
 
-window.utils.intersects = function(rectA, rectB){
-    return !(rectA.x + rectA.width < rectB.x ||
-             rectB.x + rectB.width < rectA.x ||
-             rectA.y + rectA.height < rectB.y ||
-             rectB.y + rectB.height < rectA.y);
-}
     
     
      
