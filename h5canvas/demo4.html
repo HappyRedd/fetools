@@ -42,23 +42,34 @@
         text.draw(ctx);
         var text2 = new cText(200,300,"马萌为生2",30,0,0,150,400,false);
         text2.draw(ctx);
+        var objList =[text,text2];
 
         canvas.addEventListener(tap, function(event){
-            if(utils.containsPoint(text.getBounds(), mouse.x, mouse.y)){
-                canvasApp(text);
+            for(var i=0;i<objList.length;i++){
+                if(utils.containsPoint( objList[i].getBounds(), mouse.x, mouse.y)){
+                    //objList[i].isPress =true;
+                    console.log( objList[i]);
+                   // console.log(text2.isPress);
+                    drawCanvas();
+                }
+               // console.log(objList[i].isPress );
             }
-            if(utils.containsPoint(text2.getBounds(), mouse.x, mouse.y)){
-                canvasApp(text2);
-            }
+
         }, false);
 
 
-        function canvasApp(obj) {
+  /*      function canvasApp(obj) {
             ctx.clearRect(0,0,vWidth,vHeight);
             obj.draw(ctx);
 
+        }*/
+        function drawCanvas(){
+            ctx.clearRect(0,0,vWidth,vHeight);
+            for(var i=0;i<objList.length;i++){
+                objList[i].draw(ctx);
+                console.log(objList[i].isPress );
+            }
         }
-
 
         var obj=text.getBounds();
         // drawRoundedRect(ctx,'blue',   'yellow',  obj.x,  obj.y,  obj.width,  obj.height, 0);

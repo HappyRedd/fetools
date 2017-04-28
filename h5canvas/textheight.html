@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>canvas demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        body{background-color:#ffffff;margin:0;padding:0;
+            -webkit-touch-callout :none; -webkit-user-select: none;
+
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script >
+    //获取视口宽度：window.innerWidth/Height
+    var vWidth = window.innerWidth;
+    var vHeight = window.innerHeight;
+    //获取canvas id
+    var canvas = document.getElementById("canvas");
+    //对canvas默认大小重置
+    canvas.width =vWidth;
+    canvas.height = vHeight;
+    //get Context
+    var ctx = canvas.getContext("2d");
+    //rect view by RGBA
+    ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+   // ctx.fillRect (0, 0, vWidth, vHeight);
+    textHeight ("big world", 30);
+    function textHeight (text, font) {
+
+        var fontDraw = document.createElement("canvas");
+
+        var height = 100;
+        var width = 100;
+
+        // here we expect that font size will be less canvas geometry
+        fontDraw.setAttribute("height", height);
+        fontDraw.setAttribute("width", width);
+
+        var ctx = fontDraw.getContext('2d');
+        // black is default
+        ctx.fillRect(0, 0, width, height);
+        ctx.textBaseline = 'top';
+        ctx.fillStyle = 'red';
+        ctx.font = font;
+        ctx.fillText(text/*'Eg'*/, 0, 0);
+
+        var pixels = ctx.getImageData(0, 0, width, height).data;
+
+        // row numbers where we first find letter end where it ends
+        var start = -1;
+        var end = -1;
+
+        for (var row = 0; row < height; row++) {
+            for (var column = 0; column < width; column++) {
+
+                var index = (row * width + column) * 4;
+
+                // if pixel is not white (background color)
+                if (pixels[index] == 0) {
+                    // we havent met white (font color) pixel
+                    // on the row and the letters was detected
+                    if (column == width - 1 && start != -1) {
+                        end = row;
+                        row = height;
+                        break;
+                    }
+                    continue;
+                }
+                else {
+                    // we find top of letter
+                    if (start == -1) {
+                        start = row;
+                    }
+                    // ..letters body
+                    break;
+                }
+
+            }
+
+        }
+        /*
+         document.body.appendChild(fontDraw);
+         fontDraw.style.pixelLeft = 400;
+         fontDraw.style.pixelTop = 400;
+         fontDraw.style.position = "absolute";
+         */
+
+        return end - start;
+
+    }
+    http://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas
+</script>
+</body>
+</html>

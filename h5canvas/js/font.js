@@ -17,17 +17,17 @@ cText.prototype.draw = function(ctx){
     ctx.font= this.font;
     ctx.measureText( this.txt).width= this.w;
     ctx.textAlign="left";
-    if(this.isPress==false){
+    if(this.isPress){
         ctx.fillText( this.txt, this.left, this.top);
-        this.isPress=true;
+
     }else{
         ctx.fillText( this.txt,this.sx,this.sy);
-        this.isPress=false;
+
     }
 
     ctx.restore();
-   console.log("x"+this.left)
-   console.log("y"+this.top)
+  /* console.log("x"+this.left)
+   console.log("y"+this.top)*/
 };
 cText.prototype.getBounds = function(){
     return {
