@@ -19,8 +19,17 @@ cText.prototype.draw = function(ctx){
     ctx.textAlign="left";
     ctx.fillText( this.txt, this.left, this.top);
     ctx.restore();
+   console.log("x"+this.left)
+   console.log("y"+this.top)
 };
-
+cText.prototype.getBounds = function(){
+    return {
+        x:  this.left,
+        y:  this.top,
+        width: this.w,
+        height:   this.font,
+    };
+}
 //∂Øª≠ºÊ»›
 if(!window.requestAnimationFrame){
     window.requestAnimationFrame =(window.webkitRequestAnimationFrame||
@@ -70,4 +79,8 @@ function drawRoundedRect(ctx,strokeStyle,fillStyle,cornerX,cornerY,width,height,
 function drawBg(ctx,w,h){
     ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
     ctx.fillRect (0, 0, w, h);
+}
+window.utils.containsPoint = function(rect, x, y){
+    return !(x<rect.x || x>rect.x + rect.width ||
+    y<rect.y || y>rect.y + rect.height);
 }

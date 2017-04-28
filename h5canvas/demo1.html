@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>canvas demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        body{background-color:#ffffff;margin:0;padding:0;
+            -webkit-touch-callout :none; -webkit-user-select: none;
+
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script >
+    var mtX;
+    var mtY;
+    var tap= 'ontouchend' in window ? 'touchend' : 'click';
+
+
+    window.onload = function(){
+        var vWidth = window.innerWidth;
+        var vHeight = window.innerHeight;
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        //对canvas默认大小重置
+        canvas.width = vWidth;
+        canvas.height = vHeight;
+        //get Context
+
+        var text = new cText(5,100,"马萌为生",30,0,0,250,100,false);
+        text.draw(ctx);
+        canvas.addEventListener(tap, function(event){
+            getClientR(event);
+            //console.log(mtX);
+            if((5<mtX)&& (mtX<50)&& (90<mtY)&& (mtY<120)) {
+               // console.log("y:"+mtY);
+
+                canvasApp();
+
+            }
+        });
+
+
+        //animation function
+        function canvasApp() {
+            function  drawScreen () {
+                if (moves > 0 ) {
+                    moves--;
+                    text.left += xunits;
+                    text.top += yunits;
+                }
+                ctx.clearRect(0,0,vWidth,vHeight);
+                text.draw(ctx);
+            }
+            var speed = 20;
+            var p1 = {x:5,y:100};
+            var p2 = {x:300,y:250};
+            var dx = p2.x - p1.x;
+            var dy = p2.y - p1.y;
+            var distance = Math.sqrt(dx*dx + dy*dy);
+            var moves = distance/speed;
+            var xunits = (p2.x - p1.x)/moves;
+            var yunits =(p2.y - p1.y)/moves;
+            text.left = p1.x;
+            text.top = p1.y;
+            // console.log(yunits);
+            //  console.log(p1.y);
+            //获取canvas id
+            function gameLoop() {
+                window.setTimeout(gameLoop, 20);
+                drawScreen()
+            }
+            gameLoop();
+        }
+       // drawRoundedRect(ctx,'blue',   'yellow',  5,  90,  50,  50, 0);
+    }
+
+</script>
+<script src="js/mt.js"></script>
+<script src="js/font.js"></script>
+</body>
+</html>
