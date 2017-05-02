@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<!--下面三个百分比都是为了实现后期项目优化的时候，实现自适应屏幕的宽度和高度-->
+<html style="height: 100%;">
+<!--这个需要HTML标签上也得加上style="height:100%"才行，要不然会显示一半，经常用CSS的都知道，BODY 想高度100%，外标签HTML也得设置100%-->
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+
+<body style="height: 100%;">
+<canvas id="canvas" style="height: 100%;"></canvas>
+
+<script>
+   // digit.js部分
+    digit =
+            [
+                [
+                    [0,0,1,1,1,0,0],
+                    [0,1,1,0,1,1,0],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [0,1,1,0,1,1,0],
+                    [0,0,1,1,1,0,0]
+                ],//0
+                [
+                    [0,0,0,1,1,0,0],
+                    [0,1,1,1,1,0,0],
+                    [0,0,0,1,1,0,0],
+                    [0,0,0,1,1,0,0],
+                    [0,0,0,1,1,0,0],
+                    [0,0,0,1,1,0,0],
+                    [0,0,0,1,1,0,0],
+                    [0,0,0,1,1,0,0],
+                    [0,0,0,1,1,0,0],
+                    [1,1,1,1,1,1,1]
+                ],//1
+                [
+                    [0,1,1,1,1,1,0],
+                    [1,1,0,0,0,1,1],
+                    [0,0,0,0,0,1,1],
+                    [0,0,0,0,1,1,0],
+                    [0,0,0,1,1,0,0],
+                    [0,0,1,1,0,0,0],
+                    [0,1,1,0,0,0,0],
+                    [1,1,0,0,0,0,0],
+                    [1,1,0,0,0,1,1],
+                    [1,1,1,1,1,1,1]
+                ],//2
+                [
+                    [1,1,1,1,1,1,1],
+                    [0,0,0,0,0,1,1],
+                    [0,0,0,0,1,1,0],
+                    [0,0,0,1,1,0,0],
+                    [0,0,1,1,1,0,0],
+                    [0,0,0,0,1,1,0],
+                    [0,0,0,0,0,1,1],
+                    [0,0,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [0,1,1,1,1,1,0]
+                ],//3
+                [
+                    [0,0,0,0,1,1,0],
+                    [0,0,0,1,1,1,0],
+                    [0,0,1,1,1,1,0],
+                    [0,1,1,0,1,1,0],
+                    [1,1,0,0,1,1,0],
+                    [1,1,1,1,1,1,1],
+                    [0,0,0,0,1,1,0],
+                    [0,0,0,0,1,1,0],
+                    [0,0,0,0,1,1,0],
+                    [0,0,0,1,1,1,1]
+                ],//4
+                [
+                    [1,1,1,1,1,1,1],
+                    [1,1,0,0,0,0,0],
+                    [1,1,0,0,0,0,0],
+                    [1,1,1,1,1,1,0],
+                    [0,0,0,0,0,1,1],
+                    [0,0,0,0,0,1,1],
+                    [0,0,0,0,0,1,1],
+                    [0,0,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [0,1,1,1,1,1,0]
+                ],//5
+                [
+                    [0,0,0,0,1,1,0],
+                    [0,0,1,1,0,0,0],
+                    [0,1,1,0,0,0,0],
+                    [1,1,0,0,0,0,0],
+                    [1,1,0,1,1,1,0],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [0,1,1,1,1,1,0]
+                ],//6
+                [
+                    [1,1,1,1,1,1,1],
+                    [1,1,0,0,0,1,1],
+                    [0,0,0,0,1,1,0],
+                    [0,0,0,0,1,1,0],
+                    [0,0,0,1,1,0,0],
+                    [0,0,0,1,1,0,0],
+                    [0,0,1,1,0,0,0],
+                    [0,0,1,1,0,0,0],
+                    [0,0,1,1,0,0,0],
+                    [0,0,1,1,0,0,0]
+                ],//7
+                [
+                    [0,1,1,1,1,1,0],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [0,1,1,1,1,1,0],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [0,1,1,1,1,1,0]
+                ],//8
+                [
+                    [0,1,1,1,1,1,0],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [1,1,0,0,0,1,1],
+                    [0,1,1,1,0,1,1],
+                    [0,0,0,0,0,1,1],
+                    [0,0,0,0,0,1,1],
+                    [0,0,0,0,1,1,0],
+                    [0,0,0,1,1,0,0],
+                    [0,1,1,0,0,0,0]
+                ],//9
+                [
+                    [0,0,0,0],
+                    [0,0,0,0],
+                    [0,1,1,0],
+                    [0,1,1,0],
+                    [0,0,0,0],
+                    [0,0,0,0],
+                    [0,1,1,0],
+                    [0,1,1,0],
+                    [0,0,0,0],
+                    [0,0,0,0]
+                ]//:
+            ];
+
+
+
+   // countdown9.js部分
+
+
+    var WINDOW_WIDTH = 1024;
+
+    var WINDOW_HEIGHT = 768;
+
+    var RADIUS = 8; //定义小球的半径
+
+    var MARGIN_TOP = 60; //每个数字距离画布的上边距的距离
+
+    var MARGIN_LEFT = 30; //第一个数字距离画布的左边距的距离
+
+
+
+    //定制截止时间(月是从０开始数一直到１１)
+
+    //var endTime = new Date();//（2017,11,23,23,12,52）如果在这个括号里面填上数字，前面的ｖａｒ改成ｃｏｎｓｔ就是填写的时间到当前时间的差的倒计时，最多只能有９９个小时，
+
+    //endTime.setTime( endTime.getTime()+3600*1000);//这种算法可以保证每次打开时都是倒计时一小时（１小时＝６０分钟＝３６００秒＝３６００*１０００毫秒）
+
+    //小时的位置只有两位数，一天有２４个小时，最多只能倒计时四天，
+
+    //如果需要打破这个限制，可以把小时扩充成三位数，甚至增加
+
+
+
+    //因为倒计时每一秒的变化，要加上动画的效果，动画的效果要不停的和当前的时间
+
+    //做一个比较，为此设计一个全局变量来表示现在倒计时需要有多少秒，毫秒在计算中
+
+    //要转换成秒，毫秒的细节是不需要的。
+
+    var curShowTimeSeconds = 0; //初始化
+
+
+
+    //为了储存生成的小球，要设一个数据结构，
+
+    var balls = []; //初始化一个空的数组,一旦产生新的小球，就添加在数组里面
+
+
+
+    //小球是彩色的，需要一个储存颜色的数组
+
+    const colors = ["red", "yellow", "lime", "purple", "deeppink",
+
+        "springgreen", "blue", "green", "tomato", "turquoise"
+
+    ]
+
+
+
+    window.onload = function() {
+
+//实现屏幕的自适应
+
+        WINDOW_WIDTH = document.body.clientWidth;
+
+        WINDOW_HEIGHT = document.body.clientHeight;
+
+
+
+        MARGIN_LEFT = Math.round(WINDOW_WIDTH / 10);
+
+        RADIUS = Math.round(WINDOW_WIDTH * 4 / 5 / 108) - 1;
+
+        MARGIN_TOP = Math.round(WINDOW_HEIGHT / 5);
+
+
+
+        var canvas = document.getElementById('canvas');
+
+        var context = canvas.getContext("2d");
+
+
+
+//这种方式调用宽高，有两个好处
+
+//第一屏幕的大小改变起来非常的方便
+
+//第二个后续在做屏幕的自适应的时候，只需要计算两个变量的值，非常的方便
+
+        canvas.width = WINDOW_WIDTH;
+
+        canvas.height = WINDOW_HEIGHT;
+
+//调用render函数，传入context参数，获得绘图的上下文环境
+
+
+
+        curShowTimeSeconds = getCurrentShowTimeSeconds();
+
+        setInterval(function() {
+
+            render(context); //绘制当前的画面
+
+            update(); //根据绘制画面所需要的数据结构，对数据结构进行一定的调整
+
+        }, 50);
+
+
+
+    }
+
+
+
+    function getCurrentShowTimeSeconds() {
+
+        var curTime = new Date(); //获取当前的时间
+
+
+
+
+
+        var ret = curTime.getHours()*3600+ curTime.getMinutes()*60+curTime.getSeconds();
+
+
+
+        return ret ;
+
+    }
+
+
+
+    //对当前的数据进行调整，处理时间的变化
+
+    function update() {
+
+//下一次要显示的时间
+
+        var nextShowTimeSeconds = getCurrentShowTimeSeconds();
+
+        var nextHours = parseInt(nextShowTimeSeconds / 3600);
+
+        var nextMinutes = parseInt((nextShowTimeSeconds - nextHours * 3600) / 60);
+
+        var nextSeconds = nextShowTimeSeconds % 60;
+
+
+
+        var curHours = parseInt(curShowTimeSeconds / 3600);
+
+        var curMinutes = parseInt((curShowTimeSeconds - curHours * 3600) / 60);
+
+        var curSeconds = curShowTimeSeconds % 60;
+
+
+
+//判断下一次要显示的时间和当前所显示的时间有没有变化，
+
+//如果有变化，就改变curShowTimeSeconds
+
+        if(nextSeconds != curSeconds) {
+
+//如果当前的小时的十位数已经不等于下一次要显示的小时的十位数
+
+            if(parseInt(curHours / 10) != parseInt(nextHours / 10)) {
+
+//创建一个新的函数addBalls负责加小球，找到小球的位置，以及相应的数字，生成一系列小球
+
+                addBalls(MARGIN_LEFT + 0, MARGIN_TOP, parseInt(curHours / 10));
+
+            }
+
+//创建小球的一系列操作
+
+//对小时的个位数的操作
+
+            if(parseInt(curHours % 10) != parseInt(nextHours % 10)) {
+
+                addBalls(MARGIN_LEFT + 15 * (RADIUS + 1), MARGIN_TOP, parseInt(curHours / 10));
+
+            }
+
+//对时间的分钟的十位数的操作
+
+            if(parseInt(curMinutes / 10) != parseInt(nextMinutes / 10)) {
+
+                addBalls(MARGIN_LEFT + 39 * (RADIUS + 1), MARGIN_TOP, parseInt(curMinutes / 10));
+
+            }
+
+//对时间的分钟的个位数的操作
+
+            if(parseInt(curMinutes % 10) != parseInt(nextMinutes % 10)) {
+
+                addBalls(MARGIN_LEFT + 54 * (RADIUS + 1), MARGIN_TOP, parseInt(curMinutes % 10));
+
+            }
+
+//对时间的秒钟的十位数的操作
+
+            if(parseInt(curSeconds / 10) != parseInt(nextSeconds / 10)) {
+
+                addBalls(MARGIN_LEFT + 78 * (RADIUS + 1), MARGIN_TOP, parseInt(curSeconds / 10));
+
+            }
+
+//对时间的秒钟的个位数的操作
+
+            if(parseInt(curSeconds % 10) != parseInt(nextSeconds % 10)) {
+
+                addBalls(MARGIN_LEFT + 93 * (RADIUS + 1), MARGIN_TOP, parseInt(nextSeconds % 10));
+
+            }
+
+
+
+            curShowTimeSeconds = nextShowTimeSeconds;
+
+        }
+
+
+
+        updateBalls();
+
+//数组的元素在不断的增加，但是没有减小，这样的程序是不能长时间运行的，
+
+//每个计算机都有它的极限，，他在不断的占有我们的内存，其实当balls走出我们的画面的时候
+
+//这个小球就可以不留在数组里了，设置一个机制，删除走出画面的数组，这个程序就可以长时间运行了
+
+// console.log(balls.length);//打印balls数组的长度
+
+
+
+    }
+
+    //让新产生的小球动起来
+
+    function updateBalls() {
+
+        for(var i = 0; i < balls.length; i++) {
+
+            balls[i].x += balls[i].vx;
+
+            balls[i].y += balls[i].vy;
+
+            balls[i].vy += balls[i].g;
+
+
+
+            if(balls[i].y >= WINDOW_HEIGHT - RADIUS) {
+
+                balls[i].y = WINDOW_HEIGHT - RADIUS;
+
+                balls[i].vy = -balls[i].vy * 0.75;
+
+            }
+
+
+
+        }
+
+
+
+//设置一个机制，删除走出画面的数组，保证这个程序可以长时间运行
+
+        var cnt = 0;
+
+        for(var i = 0; i < balls.length; i++) //遍历ｂａｌｌｓ数组
+
+            if(balls[i].x + RADIUS > 0 && balls[i].x - RADIUS < WINDOW_WIDTH) //判断小球是否还在画面内
+
+                balls[cnt++] = balls[i]; //保留留在画面的小球
+
+
+
+//删除不需要的小球
+
+        while(balls.length > Math.min(300, cnt)) {
+
+            balls.pop();
+
+        }
+
+
+
+    }
+
+
+
+    //实现addBalls（）
+
+    function addBalls(x, y, num) {
+
+        for(var i = 0; i < digit[num].length; i++)
+
+            for(var j = 0; j < digit[num][i].length; j++)
+
+                if(digit[num][i][j] == 1) { //如果为１，就添加一个小球
+
+                    var aBall = {
+
+                        x: x + j * 2 * (RADIUS + 1) + (RADIUS + 1), //ｘ坐标
+
+                        y: y + i * 2 * (RADIUS + 1) + (RADIUS + 1), //ｙ坐标
+
+                        g: 1.5 + Math.random(), //小球的加速度，设置随机的加速度会使小球更加的活泼
+
+                        vx: Math.pow(-1, Math.ceil(Math.random() * 1000)) * 4, //小球在ｘ方向的速度
+
+                        vy: -5, //ｙ方向的速度
+
+                        color: colors[Math.floor(Math.random() * colors.length)]
+
+
+
+                    }
+
+                    balls.push(aBall);
+
+                }
+
+    }
+
+
+
+    //绘制canvas的画布
+
+    function render(cxt) {
+
+//对一个矩形的图像进行刷新操作
+
+        cxt.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+//先绘制时钟的数值
+
+        var hours = parseInt(curShowTimeSeconds / 3600);
+
+        var minutes = parseInt((curShowTimeSeconds - hours * 3600) / 60);
+
+        var seconds = curShowTimeSeconds % 60;
+
+//一个数字一个数字的绘制时间
+
+        renderDigit(MARGIN_LEFT, MARGIN_TOP, parseInt(hours / 10), cxt)
+
+//15=7*2+1
+
+        renderDigit(MARGIN_LEFT + 15 * (RADIUS + 1), MARGIN_TOP, parseInt(hours % 10), cxt)
+
+//30=15+15
+
+        renderDigit(MARGIN_LEFT + 30 * (RADIUS + 1), MARGIN_TOP, 10, cxt)
+
+//39=30+(4*2+1)
+
+        renderDigit(MARGIN_LEFT + 39 * (RADIUS + 1), MARGIN_TOP, parseInt(minutes / 10), cxt);
+
+        renderDigit(MARGIN_LEFT + 54 * (RADIUS + 1), MARGIN_TOP, parseInt(minutes % 10), cxt);
+
+        renderDigit(MARGIN_LEFT + 69 * (RADIUS + 1), MARGIN_TOP, 10, cxt);
+
+        renderDigit(MARGIN_LEFT + 78 * (RADIUS + 1), MARGIN_TOP, parseInt(seconds / 10), cxt);
+
+        renderDigit(MARGIN_LEFT + 93 * (RADIUS + 1), MARGIN_TOP, parseInt(seconds % 10), cxt);
+
+
+
+//处理新生小球的绘制
+
+        for(var i = 0; i < balls.length; i++) {
+
+            cxt.fillStyle = balls[i].color;
+
+            cxt.beginPath();
+
+            cxt.arc(balls[i].x, balls[i].y, RADIUS, 0, 2 * Math.PI, true);
+
+            cxt.closePath();
+
+            cxt.fill();
+
+        }
+
+
+
+    }
+
+
+
+    function renderDigit(x, y, num, cxt) {
+
+
+
+        cxt.fillStyle = "rgb(0,102,153)"; //设置颜色
+
+
+
+        for(var i = 0; i < digit[num].length; i++)
+
+            for(var j = 0; j < digit[num][i].length; j++)
+
+                if(digit[num][i][j] == 1) {
+
+                    cxt.beginPath();
+
+
+
+//计算第(i,j)个圆的圆心的位置:
+
+//（假设开始点是x,y,圆的半径是R，两个圆之间的外边距是２）
+
+//centerX:x+j*2*(R+1)+(R+1);
+
+//centerY:y+i*2*(R+1)+(R+1);
+
+                    cxt.arc(x + j * 2 * (RADIUS + 1) + (RADIUS + 1), y + i * 2 * (RADIUS + 1) + (RADIUS + 1), RADIUS, 0, 2 * Math.PI)
+
+                    cxt.closePath()
+
+
+
+                    cxt.fill()
+
+                }
+
+    }
+</script>
+</body>
+
+</html>
+
+
