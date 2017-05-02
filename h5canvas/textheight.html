@@ -31,72 +31,99 @@
     var ctx = canvas.getContext("2d");
     //rect view by RGBA
     ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-   // ctx.fillRect (0, 0, vWidth, vHeight);
-    textHeight ("big world", 30);
-    function textHeight (text, font) {
+    ctx.fillRect (0, 0, vWidth, vHeight);
+    function measureTextHeight(ctx, left, top, width, height) {
 
-        var fontDraw = document.createElement("canvas");
+        // Draw the text in the specified area
+        ctx.save();
+        ctx.translate(left, top + Math.round(height * 0.8));
+        ctx.mozDrawText('gM'); // This seems like tall text...  Doesn't it?
+        ctx.restore();
 
-        var height = 100;
-        var width = 100;
+        // Get the pixel data from the canvas
+        var data = ctx.getImageData(left, top, width, height).data,
+                first = false,
+                last = false,
+                r = height,
+                c = 0;
 
-        // here we expect that font size will be less canvas geometry
-        fontDraw.setAttribute("height", height);
-        fontDraw.setAttribute("width", width);
-
-        var ctx = fontDraw.getContext('2d');
-        // black is default
-        ctx.fillRect(0, 0, width, height);
-        ctx.textBaseline = 'top';
-        ctx.fillStyle = 'red';
-        ctx.font = font;
-        ctx.fillText(text/*'Eg'*/, 0, 0);
-
-        var pixels = ctx.getImageData(0, 0, width, height).data;
-
-        // row numbers where we first find letter end where it ends
-        var start = -1;
-        var end = -1;
-
-        for (var row = 0; row < height; row++) {
-            for (var column = 0; column < width; column++) {
-
-                var index = (row * width + column) * 4;
-
-                // if pixel is not white (background color)
-                if (pixels[index] == 0) {
-                    // we havent met white (font color) pixel
-                    // on the row and the letters was detected
-                    if (column == width - 1 && start != -1) {
-                        end = row;
-                        row = height;
-                        break;
-                    }
-                    continue;
-                }
-                else {
-                    // we find top of letter
-                    if (start == -1) {
-                        start = row;
-                    }
-                    // ..letters body
+        // Find the last line with a non-white pixel
+        while(!last && r) {
+            r--;
+            for(c = 0; c < width; c++) {
+                if(data[r * width * 4 + c * 4 + 3]) {
+                    last = r;
                     break;
                 }
+            }
+        }
 
+        // Find the first line with a non-white pixel
+        while(r) {
+            r--;
+            for(c = 0; c < width; c++) {
+                if(data[r * width * 4 + c * 4 + 3]) {
+                    first = r;
+                    break;
+                }
             }
 
+            // If we've got it then return the height
+            if(first != r) return last - first;
         }
-        /*
-         document.body.appendChild(fontDraw);
-         fontDraw.style.pixelLeft = 400;
-         fontDraw.style.pixelTop = 400;
-         fontDraw.style.position = "absolute";
-         */
 
-        return end - start;
-
+        // We screwed something up...  What do you expect from free code?
+        return 0;
     }
-    http://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas
+
+    // Set the font
+    ctx.mozTextStyle = '32px Arial';
+
+    // Specify a context and a rect that is safe to draw in when calling measureTextHeight
+    var height = measureTextHeight(ctx, 0, 0, 50, 50);
+    console.log(height);
+
+
+    var fixCanvas = function(ctx) {
+        // upgrade Firefox 3.0.x text rendering to HTML 5 standard
+        if (!ctx.fillText && ctx.mozDrawText) {
+            ctx.fillText = function(textToDraw, x, y, maxWidth) {
+                ctx.translate(x, y);
+                ctx.mozTextStyle = ctx.font;
+                ctx.mozDrawText(textToDraw);
+                ctx.translate(-x, -y);
+            }
+        }
+
+        if (!ctx.measureText && ctx.mozMeasureText) {
+            ctx.measureText = function(text) {
+                ctx.mozTextStyle = ctx.font;
+                var width = ctx.mozMeasureText(text);
+                return { width: width };
+            }
+        }
+
+        if (ctx.measureText && !ctx.html5MeasureText) {
+            ctx.html5MeasureText = ctx.measureText;
+            ctx.measureText = function(text) {
+                var textMetrics = ctx.html5MeasureText(text);
+
+                // fake it 'til you make it
+                textMetrics.ascent = ctx.html5MeasureText("m").width;
+
+                return textMetrics;
+            }
+        }
+
+        // for other browsers
+        if (!ctx.fillText) {
+            ctx.fillText = function() {}
+        }
+
+        if (!ctx.measureText) {
+            ctx.measureText = function() { return 10; }
+        }
+    };
 </script>
 </body>
 </html>

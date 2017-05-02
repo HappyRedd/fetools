@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jCanvaScript.1.5.18.min.js"></script>
+
+</head>
+<body>
+
+<script type="text/javascript">
+window.onload = function(){
+
+    onload_1("canvas_1") ;
+    onload_2("canvas_1");
+
+}
+function onload_1(idCanvas)
+{
+    console.log("aaa")
+    jc.start(idCanvas);
+    jc.text("Text example",90,130);
+    jc.start(idCanvas);
+}
+function start_2(idCanvas)
+{
+    jc('#myCircle_2').click();
+}
+function stop_2(idCanvas)
+{
+    jc('#myCircle_2')
+            .color('#ff0000');
+}
+function onload_2(idCanvas)
+{
+    jc.start(idCanvas,true);
+    jc.circle(100,120,50,'#ff0000',1)
+            .id('myCircle_2')
+            .click(function(){
+                this.color('#00ff00');
+            });
+}
+</script>
+<canvas id="canvas_1" width="250px" height="265px">
+</canvas>
+</body>
+
+</html>

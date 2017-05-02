@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>canvas demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<canvas id="c1"></canvas>
+<script>
+window.onload = function(){
+    //获取视口宽度：window.innerWidth/Height
+    var vWidth = window.innerWidth;
+    var vHeight = window.innerHeight;
+
+    var oC = document.getElementById("c1");
+    oC.width =vWidth;
+    oC.height = vHeight;
+    var oGC = oC.getContext('2d');
+    oGC.font="40px Arial";
+    cReact('c1',vWidth/4,vHeight/8,vWidth/2,vHeight/10);
+    var text1 = new moduleText("c1","你好，世界",10,400,vWidth/4+3,vHeight/8+20,false);
+    text1.initText();
+
+    var text2 = new moduleText("c1","你好，世界2",110,400,vWidth/4+3,vHeight/8+50,false);
+    text2.initText();
+    var text3 = new moduleText("c1","你好，世界3",110,450,vWidth/4+100,vHeight/8+20,false);
+    text3.initText();
+    var isCount;
+};
+function moduleText(idCanvas,text,x,y,tx,ty,isPress){
+    this.idCanvas = idCanvas;
+    this.text = text;
+    this.x =x;
+    this.y = y;
+    this.tx = tx;
+    this.ty= ty;
+    this.isPress = isPress;
+    this.speed=800;
+}
+moduleText.prototype.initText= function(){
+    var self = this;
+        jc.start(self.idCanvas,true);
+        jc.text( self.text, self.x ,self.y,'rgb(255,0,0)').font('20px Times New Roman').click(function(){
+            if( self.isPress==true){
+                this.animate({x:self.x,y:self.y},self.speed);
+                self.isPress =false;
+                isCount= self.isPress;
+            }
+            else{
+                self.isPress =true;
+                isCount= self.isPress;
+               // this .font('1px Times New Roman');
+                this.animate({x:self.tx,y:self.ty},self.speed);
+            }
+            console.log(isCount)
+        });
+        jc.start(this.idCanvas);
+}
+function cReact(idCanvas,x,y,w,h)
+{
+    jc.start(idCanvas);
+    jc.rect(x,y,w,h);
+    jc.start(idCanvas);
+}
+</script>
+<script src="js/jCanvaScript.1.5.18.min.js"></script>
+</body>
+</html>
