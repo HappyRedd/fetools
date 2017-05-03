@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+        function onload_9(idCanvas)
+        {
+            jc.start(idCanvas,true);
+            jc.text("Text example",90,130)
+                    .draggable(function(){
+                        var opacity = Math.random();
+                        this.opacity(opacity);
+                    });
+        }
+        window.onload = function(){
+            //获取视口宽度：window.innerWidth/Height
+            var vWidth = window.innerWidth;
+            var vHeight = window.innerHeight;
+            //获取canvas id
+            var canvas = document.getElementById("canvas_9");
+            canvas.width =vWidth;
+            canvas.height = vHeight;
+            onload_9("canvas_9")
+        }
+    </script>
+</head>
+<body>
+
+<canvas id="canvas_9" width="250px" height="265px">
+</canvas>
+<script src="js/jCanvaScript.1.5.18.min.js"></script>
+</body>
+</html>

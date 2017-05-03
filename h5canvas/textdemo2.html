@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        var vWidth = window.innerWidth;
+        var vHeight = window.innerHeight;
+        function beginDemo() {
+            var canvas = document.getElementById("demo");
+            var ctx = canvas.getContext('2d'); ctx.beginPath();
+            canvas.width =vWidth;
+            canvas.height = vHeight;
+            ctx.lineWidth = "3";
+            ctx.strokeStyle = "blue";
+            ctx.fillStyle = "orange";
+            ctx.moveTo(100, 100); ctx.lineTo(100, 400);
+            ctx.lineTo(400, 400); ctx.lineTo(400, 100);
+            ctx.closePath(); ctx.fill(); ctx.stroke();
+            ctx.font = "32pt Arial"; ctx.strokeText("我是中文字", 120, 200);
+            ctx.strokeStyle = "red"; ctx.stroke();
+        }
+        window.onload = function(){
+            beginDemo();
+        }
+    </script>
+</head>
+<body>
+<canvas id="demo"></canvas>
+</body>
+</html>
