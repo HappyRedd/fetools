@@ -102,7 +102,7 @@
             if(utils.containsPoint(text2.getBounds(), mouse.x, mouse.y)){
                 console.log(text2.getBounds());
             }
-            //console.log(text.getBounds());
+            console.log(text.getBounds());
 
         }, false);
 
@@ -150,12 +150,23 @@
         ctx.restore();
     };
     cText.prototype.getBounds = function(){
-        return {
-            x:  this.x,
-            y:   this.y- this.h,
-            width: this.sw,
-            height: this.h,
-        };
+        if( this.isPress==false) {
+            return {
+                x: this.tx,
+                y: this.ty - this.h,
+                width: this.sw,
+                height: this.h,
+            };
+        }
+        else{
+
+            return {
+                x: this.x,
+                y: this.y - this.h,
+                width: this.sw,
+                height: this.h,
+            };
+        }
     };
     //rect
     function roundedRect(ctx,cornerX, cornerY, width, height, cornerRadius) {
