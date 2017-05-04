@@ -91,6 +91,13 @@
 
                 if(utils.containsPoint(text.getBounds(), mouse.x, mouse.y)){
                     console.log(text.getBounds());
+                    ctx.clearRect(0,0,vWidth,vHeight);
+                    ctx.save();
+                    ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+                    ctx.fillRect (0, 0, vWidth, vHeight);
+                    ctx.restore();
+                    text.draw(ctx);
+                    text2.draw(ctx);
                 }
             if(utils.containsPoint(text2.getBounds(), mouse.x, mouse.y)){
                 console.log(text2.getBounds());
@@ -131,10 +138,16 @@
         this.sw = ctx.measureText(  this.txt).width;
         ctx.textAlign="bottom";
         ctx.fillStyle = this.fillStyle;
-        ctx.fillText(this.txt, this.x,this.y);
+        if(  this.isPress==false){
+            ctx.fillText(this.txt, this.x,this.y);
+            drawRoundedRect(ctx, "rgba(255,255,255, 0.4)", "rgba(255,255,255, 0.4)", this.x, this.y- this.h,this.sw + 5, this.h + 7, 0);
+            this.isPress = true;
+        }
+        else{
+            ctx.fillText(this.txt, this.tx,this.ty);
+            this.isPress = false;
+        }
         ctx.restore();
-        drawRoundedRect(ctx, "rgba(255,255,255, 0.4)", "rgba(255,255,255, 0.4)", this.x, this.y- this.h,this.sw + 5, this.h + 7, 0);
-        console.log('w:'+this.sw)
     };
     cText.prototype.getBounds = function(){
         return {

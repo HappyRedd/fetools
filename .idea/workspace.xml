@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="67122e4c-6e64-4951-88b2-e378948dc668" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/canvastext/js/boundingRect.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/canvastext/demo1.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/canvastext/demo2.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/canvastext/demo3.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/canvastext/js/text.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/canvastext/js/utils.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/canvastext/demo3.html" afterPath="$PROJECT_DIR$/canvastext/demo3.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/canvastext/js/text.js" afterPath="$PROJECT_DIR$/canvastext/js/text.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="FETOOLS.iws" />
@@ -72,8 +68,8 @@
       <file leaf-file-name="demo4.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/h5canvas/demo4.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.25">
-              <caret line="39" column="47" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="47" />
+            <state vertical-scroll-proportion="-16.5">
+              <caret line="66" column="46" selection-start-line="66" selection-start-column="10" selection-end-line="66" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -102,9 +98,21 @@
       <file leaf-file-name="demo3.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/canvastext/demo3.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5516841">
-              <caret line="97" column="44" selection-start-line="97" selection-start-column="44" selection-end-line="97" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.40418118">
+              <caret line="93" column="54" selection-start-line="93" selection-start-column="54" selection-end-line="93" selection-end-column="54" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="text.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/canvastext/js/text.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc;n#cText#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -115,18 +123,6 @@
             <state vertical-scroll-proportion="14.035714">
               <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="31" selection-end-column="42" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="aminte.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/h5canvas/aminte.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.25">
-              <caret line="191" column="87" selection-start-line="191" selection-start-column="7" selection-end-line="191" selection-end-column="87" />
-              <folding>
-                <element signature="e#2320#6955#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -183,9 +179,9 @@
         <option value="$PROJECT_DIR$/h5canvas/countdemo3.html" />
         <option value="$PROJECT_DIR$/canvastext/demo1.html" />
         <option value="$PROJECT_DIR$/canvastext/js/boundingRect.js" />
-        <option value="$PROJECT_DIR$/canvastext/js/text.js" />
         <option value="$PROJECT_DIR$/canvastext/demo2.html" />
         <option value="$PROJECT_DIR$/canvastext/js/utils.js" />
+        <option value="$PROJECT_DIR$/canvastext/js/text.js" />
         <option value="$PROJECT_DIR$/canvastext/demo3.html" />
       </list>
     </option>
@@ -988,16 +984,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/canvastext/js/text.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="20" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zrender-master/src/zrender.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1090,18 +1076,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/canvastext/js/text.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc;n#cText#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/h5canvas/demo4.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.25">
-          <caret line="39" column="47" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="47" />
+        <state vertical-scroll-proportion="-16.5">
+          <caret line="66" column="46" selection-start-line="66" selection-start-column="10" selection-end-line="66" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/canvastext/demo3.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5516841">
-          <caret line="97" column="44" selection-start-line="97" selection-start-column="44" selection-end-line="97" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.40418118">
+          <caret line="93" column="54" selection-start-line="93" selection-start-column="54" selection-end-line="93" selection-end-column="54" />
           <folding />
         </state>
       </provider>
