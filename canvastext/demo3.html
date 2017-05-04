@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>canvas demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--  <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
+    <script src="js/utils.js"></script>
+    <style>
+        body{background-color:#ffffff;margin:0;padding:0;
+            -webkit-touch-callout :none; -webkit-user-select: none;
+
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script >
+    var mouse = utils.captureMouse(canvas);
+
+    var tap= 'ontouchend' in window ? 'touchend' : 'click';
+    window.onload = function(){
+
+        //获取视口宽度：window.innerWidth/Height
+        var vWidth = window.innerWidth;
+        var vHeight = window.innerHeight;
+        //获取canvas id
+        var canvas = document.getElementById("canvas");
+        //对canvas默认大小重置
+        canvas.width =vWidth;
+        canvas.height = vHeight;
+        //get Context
+        var ctx = canvas.getContext("2d");
+        //rect view by RGBA
+        ctx.save();
+        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+        ctx.fillRect (0, 0, vWidth, vHeight);
+        ctx.restore();
+         var text=new cText('人民的产品','#FFFFFF',150,300, "30px Arial",50,100,20,20,false);
+          text.draw(ctx);
+        var text2=new cText('2 周年','#FFFFFF',150,200, "40px Arial",50,100,20,20,false);
+        text2.draw(ctx);
+
+        var h;
+        var w;
+
+        var font = '36pt Times';
+        var message = '四';
+
+
+
+        // FIXME 高度计算比较粗暴
+
+
+
+
+        ctx.fillStyle = 'black';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top'; // important!
+        ctx.font = font;
+
+
+
+
+
+        // Canvas can tell us the width
+        w = ctx.measureText(message).width;
+        ctx.save();
+
+
+
+        //drawFillRect(ctx,200,400,w,w);
+       // drawRoundedRect(ctx,"rgba(255,255,255, 0.4)", "rgba(255,255,255, 0.4)", text.getBounds().x,  text.getBounds().y, text.getBounds().width, text.getBounds().height+5, 0);
+        ctx.save();
+
+
+        ctx.fillText("中华", 2000, 400);
+        ctx.restore();
+        ctx.fillStyle = 'red';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top'; // important!
+        ctx.font = font;
+        ctx.fillText(message, 200, 400);
+
+        canvas.addEventListener(tap, function(event){
+
+                if(utils.containsPoint(text.getBounds(), mouse.x, mouse.y)){
+                    console.log(text.getBounds());
+                }
+            if(utils.containsPoint(text2.getBounds(), mouse.x, mouse.y)){
+                console.log(text2.getBounds());
+            }
+            //console.log(text.getBounds());
+
+        }, false);
+
+
+
+
+    };
+
+
+
+    function cText(txt,fillStyle,x,y,size,tx,ty,sx,sy,isPress){
+        this.x = x||0;
+        this.y = y||0;
+        this.txt = txt||'请输入数据';
+        this.fillStyle= fillStyle;
+        this.font =size;
+        this.tx = tx||0;
+        this.ty = ty||0;
+        this.w = 0;
+        this.sw =0;
+        this.h = 0;
+        this.sx = sx;
+        this.sy = sy;
+        this.isPress=isPress;
+    }
+    cText.prototype.draw = function(ctx){
+        ctx.save();
+        //  ctx.translate(this.tx,this.ty);
+        ctx.font =  this.font;
+
+        this.w= ctx.measureText('四').width;
+        this.h =  ctx.measureText('四').width;
+        this.sw = ctx.measureText(  this.txt).width;
+        ctx.textAlign="bottom";
+        ctx.fillStyle = this.fillStyle;
+        ctx.fillText(this.txt, this.x,this.y);
+        ctx.restore();
+        drawRoundedRect(ctx, "rgba(255,255,255, 0.4)", "rgba(255,255,255, 0.4)", this.x, this.y- this.h,this.sw + 5, this.h + 7, 0);
+        console.log('w:'+this.sw)
+    };
+    cText.prototype.getBounds = function(){
+        return {
+            x:  this.x,
+            y:   this.y- this.h,
+            width: this.sw,
+            height: this.h,
+        };
+    };
+    //rect
+    function roundedRect(ctx,cornerX, cornerY, width, height, cornerRadius) {
+        if (width> 0) ctx.moveTo(cornerX + cornerRadius, cornerY);
+        else  ctx.moveTo(cornerX - cornerRadius, cornerY);
+        ctx.arcTo(cornerX+width,cornerY,cornerX + width,cornerY+height,cornerRadius);
+        ctx.arcTo(cornerX+width,cornerY + height,cornerX,cornerY+height,cornerRadius);
+        ctx.arcTo(cornerX,cornerY+height,cornerX,cornerY,cornerRadius);
+        if(width> 0) {
+            ctx.arcTo(cornerX,cornerY,cornerX+cornerRadius,cornerY,cornerRadius);
+        }
+        else{
+            ctx.arcTo(cornerX,cornerY,cornerX-cornerRadius,cornerY,cornerRadius);
+        }
+    }
+
+    function drawRoundedRect(ctx,strokeStyle,fillStyle,cornerX,cornerY,width,height,cornerRadius) {
+        ctx.beginPath();
+        roundedRect(ctx,cornerX, cornerY, width, height, cornerRadius);
+        ctx.strokeStyle = strokeStyle;
+        ctx.fillStyle = fillStyle;
+        ctx.stroke();
+        ctx.fill();
+
+    }
+    //绘制长方形
+    function drawFillRect(cxt,x, y, a, b) {
+        cxt.save();
+        cxt.fillStyle = "rgba(255,255,255, 0.4)";
+        cxt.fillRect(x, y, a, b);
+        cxt.stroke();
+    }
+
+
+</script>
+
+</body>
+</html>

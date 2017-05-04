@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>canvas demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        body{background-color:#ffffff;margin:0;padding:0;
+            -webkit-touch-callout :none; -webkit-user-select: none;
+
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script >
+    var mtX;
+    var mtY;
+    var tap= 'ontouchend' in window ? 'touchend' : 'click';
+    window.onload = function(){
+
+        //获取视口宽度：window.innerWidth/Height
+        var vWidth = window.innerWidth;
+        var vHeight = window.innerHeight;
+        //获取canvas id
+        var canvas = document.getElementById("canvas");
+        //对canvas默认大小重置
+        canvas.width =vWidth;
+        canvas.height = vHeight;
+        //get Context
+        var ctx = canvas.getContext("2d");
+        //rect view by RGBA
+        ctx.save();
+        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+        ctx.fillRect (0, 0, vWidth, vHeight);
+       // var text=new cText('人民的产品',150,300,40,50,100,20,20,false);
+      //  text.draw(ctx);
+        var h;
+        var w;
+
+        var font = '36px Times';
+        var message = 'Big Text';
+
+        ctx.fillStyle = 'black';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top'; // important!
+        ctx.font = font;
+        ctx.fillText(message, 200, 300);
+
+
+
+
+            // Canvas can tell us the width
+         w = ctx.measureText(message).width;
+
+        // New function gets the other info we need
+        h = getTextHeight(font);
+        console.log(h);
+        console.log(w);
+
+        //drawRoundedRect(ctx,'blue',   'yellow', 200,  300, w,  h.height, 0);
+        testLine(ctx, 200, 300, w, 'red');
+        testLine(ctx, 200, 300 + h.ascent, w, 'green');
+       testLine(ctx, 200, 300 + h.height, w, 'blue');
+
+        drawFillRect(ctx,200,200,100,50);
+
+
+
+
+    };
+
+
+
+    function cText(txt,x,y,size,tx,ty,sx,sy,isPress){
+        this.x = x||0;
+        this.y = y||0;
+        this.txt = txt||'请输入数据';
+        this.font = size||"30px Arial";
+        this.tx = tx||0;
+        this.ty = ty||0;
+        this.w = 0;
+        this.sx = sx;
+        this.sy = sy;
+        this.isPress=isPress;
+    }
+    cText.prototype.draw = function(ctx){
+        ctx.save();
+      //  ctx.translate(this.tx,this.ty);
+        ctx.font= this.font;
+        ctx.measureText( this.txt).width= this.w;
+        ctx.textAlign="left";
+        ctx.fillText(this.txt, this.x,this.y);
+        ctx.restore();
+
+    };
+    var getTextHeight = function(font) {
+
+        var text = $('<span>Hg</span>').css({ fontFamily: font });
+        var block = $('<div style="display: inline-block; width: 1px; height: 0px;"></div>');
+
+        var div = $('<div></div>');
+        div.append(text, block);
+
+        var body = $('body');
+        body.append(div);
+
+        try {
+
+            var result = {};
+
+            block.css({ verticalAlign: 'baseline' });
+            result.ascent = block.offset().top - text.offset().top;
+
+            block.css({ verticalAlign: 'bottom' });
+            result.height = block.offset().top - text.offset().top;
+
+            result.descent = result.height - result.ascent;
+
+        } finally {
+            div.remove();
+        }
+
+        return result;
+    };
+    var testLine = function(ctx, x, y, len, style) {
+        ctx.strokeStyle = style;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + len, y);
+        ctx.closePath();
+        ctx.stroke();
+    };
+    //rect
+    function roundedRect(ctx,cornerX, cornerY, width, height, cornerRadius) {
+        if (width> 0) ctx.moveTo(cornerX + cornerRadius, cornerY);
+        else  ctx.moveTo(cornerX - cornerRadius, cornerY);
+        ctx.arcTo(cornerX+width,cornerY,cornerX + width,cornerY+height,cornerRadius);
+        ctx.arcTo(cornerX+width,cornerY + height,cornerX,cornerY+height,cornerRadius);
+        ctx.arcTo(cornerX,cornerY+height,cornerX,cornerY,cornerRadius);
+        if(width> 0) {
+            ctx.arcTo(cornerX,cornerY,cornerX+cornerRadius,cornerY,cornerRadius);
+        }
+        else{
+            ctx.arcTo(cornerX,cornerY,cornerX-cornerRadius,cornerY,cornerRadius);
+        }
+    }
+
+    function drawRoundedRect(ctx,strokeStyle,fillStyle,cornerX,cornerY,width,height,cornerRadius) {
+        ctx.beginPath();
+        roundedRect(ctx,cornerX, cornerY, width, height, cornerRadius);
+        ctx.strokeStyle = strokeStyle;
+        ctx.fillStyle = fillStyle;
+        ctx.stroke();
+        ctx.fill();
+    }
+    //绘制长方形
+    function drawFillRect(cxt,x, y, a, b) {
+        cxt.fillStyle = "black";
+        cxt.fillRect(x, y, a, b);
+    }
+</script>
+
+</body>
+</html>
