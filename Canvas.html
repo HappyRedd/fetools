@@ -19,9 +19,11 @@
 </style>
 </head>
 <body style="background:#eeeeee;">
- <canvas id="tutorial" width="400" height="200" style="z-index:100;display:block;position:absolute;"></canvas>
+ <canvas id="tutorial" style="z-index:100;display:block;position:absolute;"></canvas>
  <span id=info></span>
  <script type="text/javascript">
+   var vWidth = window.innerWidth;
+   var vHeight = window.innerHeight;
    var list = [];
    var currentC;
    var _e={};
@@ -48,12 +50,14 @@
 
    function draw(){
      var canvas = document.getElementById('tutorial');
+     canvas.width =vWidth;
+     canvas.height = vHeight;
      if(canvas.getContext){
        var ctx = canvas.getContext('2d');
        for(var i=0;i<10;i++){
-         var x = Math.random()*100;
-         var y = Math.random()*100;
-         var c = new cricle(x,y,5);
+         var x = Math.random()*vWidth;
+         var y = Math.random()*vHeight;
+         var c = new cricle(x,y,10);
          c.drawC(ctx);
          list.push(c);
        }

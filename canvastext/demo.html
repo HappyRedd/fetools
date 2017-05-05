@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function obj(o){
+        function F(){};
+        F.prototype = o;
+        return new F();
+    }
+    function createObj(o){
+        var f = obj(o);
+        return f;
+    }
+    function Person(name){
+        this.name = name||'王五';
+    }
+    function Book(){
+        name:'张三';
+    }
+    var a = createObj(Person('盖茨比'));
+    console.log(a)
+    var b = createObj(Book);
+    console.log(b.name)
+</script>
+</body>
+</html>
