@@ -1,0 +1,31 @@
+{
+{
+"name": "阿二",
+"result": 10,
+"img":"images/scene10/scene10_26.png",
+}
+,
+{
+"name": "apagg",
+"result": 10,
+"img": "images/scene10/scene10_26.png",
+}
+,
+{
+"name":"我的家",
+"result":10,
+"img":"images/scene10/scene10_26.png",
+},
+
+{
+"name":"胡三",
+"result":10,
+"img":"images/scene10/scene10_26.png",
+},
+{
+"name":"王五",
+"result":10,
+"img":"images/scene10/scene10_26.png",
+},
+
+}

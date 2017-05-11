@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>canvas demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--  <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
+    <script src="js/utils.js"></script>
+    <style>
+        body{background-color:#ffffff;margin:0;padding:0;
+            -webkit-touch-callout :none; -webkit-user-select: none;
+
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script >
+
+    var mouse = utils.captureMouse(canvas);
+
+    var tap= 'ontouchend' in window ? 'touchend' : 'click';
+    window.onload = function(){
+
+        //获取视口宽度：window.innerWidth/Height
+        var vWidth = window.innerWidth;
+        var vHeight = window.innerHeight;
+        //获取canvas id
+        var canvas = document.getElementById("canvas");
+        //对canvas默认大小重置
+        canvas.width =vWidth;
+        canvas.height = vHeight;
+        //get Context
+        var ctx = canvas.getContext("2d");
+        //rect view by RGBA
+        ctx.save();
+        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+        ctx.fillRect (0, 0, vWidth, vHeight);
+        ctx.restore();
+
+        var data1 = ['2周年','民族产品','中国梦','朗朗','世界 ','破题 ','引领 ','创新 ','2周年 ','上市会 ','3周年 ','国际化 ','朗沐','原研 ','沐沐 ','中国制造 ','朗沐 ','大跨步 ','中国梦 ','纪念日 ','中国梦','民族产品','朗朗 ','世界 ','破题 ','引领 ','创新 '];
+        var fontArr =[];
+
+
+        var data2 = [
+            {
+                text:"2周年",
+                font: "47px Arial",
+                h:0,
+                w:0,
+                x:0.501,
+                y:0.457,
+                tx:0.104,
+                ty:0.31
+
+            },
+            {
+                text:"民族产品",
+                font: "28px Arial",
+                h:0,
+                w:0,
+                x:0.6,
+                y:0.544,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"世界",
+                font: "26px Arial",
+                h:0,
+                w:0,
+                x:0.829,
+                y:0.655,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"破题",
+                font: "33px Arial",
+                h:0,
+                w:0,
+                x:0.722,
+                y:0.782,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"引领",
+                font: "32px Arial",
+                h:0,
+                w:0,
+                x:0.554,
+                y:0.817,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"创新",
+                font: "40px Arial",
+                h:0,
+                w:0,
+                x:0.349,
+                y:0.785,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"引领",
+                font: "28px Arial",
+                h:0,
+                w:0,
+                x:0.25,
+                y:0.748,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"沐沐",
+                font: "32px Arial",
+                h:0,
+                w:0,
+                x:0.061,
+                y:0.773,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"原研",
+                font: "31px Arial",
+                h:0,
+                w:0,
+                x:0.071,
+                y:0.701,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"国际化",
+                font: "12px Arial",
+                h:0,
+                w:0,
+                x:0.168,
+                y:0.641,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"朗沐",
+                font: "27px Arial",
+                h:0,
+                w:0,
+                x:0.082,
+                y:0.601,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"三周年",
+                font: "26px Arial",
+                h:0,
+                w:0,
+                x:0.045,
+                y:0.538,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"中国梦",
+                font: "39px Arial",
+                h:0,
+                w:0,
+                x:0.273,
+                y:0.530,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"朗沐",
+                font: "31px Arial",
+                h:0,
+                w:0,
+                x:0.413,
+                y:0.584,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"FDAIII期临床",
+                font: "14px Arial",
+                h:0,
+                w:0,
+                x:0.632,
+                y:0.622,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"纪念日",
+                font: "28px Arial",
+                h:0,
+                w:0,
+                x:0.622,
+                y:0.695,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"朗朗",
+                font: "25px Arial",
+                h:0,
+                w:0,
+                x:0.629,
+                y:0.733,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"上市会",
+                font: "24px Arial",
+                h:0,
+                w:0,
+                x:0.408,
+                y:0.723,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"大跨步",
+                font: "31px Arial",
+                h:0,
+                w:0,
+                x:0.25,
+                y:0.671,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"中国制造",
+                font: "19px Arial",
+                h:0,
+                w:0,
+                x:0.29,
+                y:0.651,
+                tx:0.104,
+                ty:0.31
+            },
+            {
+                text:"3周年",
+                font: "30px Arial",
+                h:0,
+                w:0,
+                x:0.488,
+                y:0.658,
+                tx:0.104,
+                ty:0.31
+            },
+        ];
+
+        for(var j=0;j<data2.length;j++){
+            data2[j].w = parseInt(getRects(ctx,data2[j].text, data2[j].font).w);
+            data2[j].h = parseInt( getRects(ctx,data2[j].text,data2[j].font).h);
+
+            data2[j].x=parseInt( data2[j].x*vWidth);
+            data2[j].y=parseInt( data2[j].y*vHeight);
+            data2[j].tx=parseInt( data2[j].tx*vWidth);
+            data2[j].ty=parseInt( data2[j].ty*vHeight);
+        }
+
+
+        var textList = [];
+
+        for(var n=0;n<data2.length;n++){
+            textList.push(new Text(data2[n].text,'#FFFFFF',data2[n].x,data2[n].y, data2[n].font,data2[n].tx,data2[n].ty,20,20)) ;
+            textList[n].draw(ctx);
+        }
+
+
+
+        canvas.addEventListener("click", function(event){
+
+            for(var i=0;i<textList.length;i++) {
+                //console.log(textList[i].getBounds());
+                if (utils.containsPoint(textList[i].getBounds(), event.x, event.y)) {
+                    console.log(textList[i].getBounds());
+
+                    textList[i].isCurrent = !textList[i].isCurrent;
+
+                    ctx.clearRect(0, 0, vWidth, vHeight);
+                    ctx.save();
+                    ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+                    ctx.fillRect(0, 0, vWidth, vHeight);
+                    ctx.restore();
+                    //textList[i].draw(ctx);
+                    //textList.splice(i, 1);
+
+                    for(var l=0;l<textList.length;l++){
+                        textList[l].draw(ctx);
+                    }
+
+                }
+            }
+        }, false);
+
+        drawFillRect(ctx,vWidth/20,vHeight/3,vWidth*9/10,vHeight*4/8)
+
+
+    };
+
+    function getRects(ctx,txt,font){
+        ctx.save();
+        ctx.font =  font
+        var getedW= ctx.measureText('四').width;
+        var getedH = getedW;
+        var getedTextWith = ctx.measureText( txt).width;
+        /*  ctx.textAlign = 'left';
+         ctx.textBaseline = 'top';
+         ctx.fillStyle = this.fillStyle;
+         ctx.fillText(txt, 1000,1000);*/
+        ctx.restore();
+        return{
+            h:getedH,
+            w:getedTextWith
+        }
+    }
+    function Text(txt,fillStyle,x,y,size,tx,ty,sx,sy){
+        this.x = x||0;
+        this.y = y||0;
+        this.txt = txt||'请输入数据';
+        this.fillStyle= fillStyle;
+
+        this.font =size;
+        this.tx = tx||0;
+        this.ty = ty||0;
+        this.w = 0;
+        this.sw =0;
+        this.h = 0;
+        this.sx = sx;
+        this.sy = sy;
+        this.isCurrent=false;
+    }
+    Text.prototype.draw = function(ctx){
+
+        ctx.save();
+        //  ctx.translate(this.tx,this.ty);
+        ctx.font =  this.font;
+        this.w= ctx.measureText('四').width;
+        this.h =  ctx.measureText('四').width;
+        this.sw = ctx.measureText(  this.txt).width;
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+
+        ctx.fillStyle = this.fillStyle;
+        if(  this.isCurrent==false){
+
+            ctx.fillText(this.txt, this.x,this.y);
+            drawRoundedRect(ctx, "rgba(255,255,255, 0.4)", "rgba(255,255,255, 0.4)", this.x, this.y,this.sw + 5, this.h + 7, 0);
+
+        }
+        else{
+            ctx.fillText(this.txt, this.tx,this.ty);
+        }
+
+        ctx.restore();
+    };
+    Text.prototype.getBounds = function(){
+
+
+        if( this.isCurrent==false) {
+            return {
+                x: this.x,
+                y: this.y,
+                width: this.sw,
+                height: this.h,
+
+            };
+
+        }
+        else{
+
+
+            return {
+                x: this.tx,
+                y: this.ty ,
+                width: this.sw,
+                height: this.h,
+            };
+
+        }
+
+    };
+
+    //rect
+    function roundedRect(ctx,cornerX, cornerY, width, height, cornerRadius) {
+        if (width> 0) ctx.moveTo(cornerX + cornerRadius, cornerY);
+        else  ctx.moveTo(cornerX - cornerRadius, cornerY);
+        ctx.arcTo(cornerX+width,cornerY,cornerX + width,cornerY+height,cornerRadius);
+        ctx.arcTo(cornerX+width,cornerY + height,cornerX,cornerY+height,cornerRadius);
+        ctx.arcTo(cornerX,cornerY+height,cornerX,cornerY,cornerRadius);
+        if(width> 0) {
+            ctx.arcTo(cornerX,cornerY,cornerX+cornerRadius,cornerY,cornerRadius);
+        }
+        else{
+            ctx.arcTo(cornerX,cornerY,cornerX-cornerRadius,cornerY,cornerRadius);
+        }
+    }
+
+    function drawRoundedRect(ctx,strokeStyle,fillStyle,cornerX,cornerY,width,height,cornerRadius) {
+        ctx.beginPath();
+        roundedRect(ctx,cornerX, cornerY, width, height, cornerRadius);
+        ctx.strokeStyle = strokeStyle;
+        ctx.fillStyle = fillStyle;
+        ctx.stroke();
+        ctx.fill();
+
+    }
+    //绘制长方形
+    function drawFillRect(cxt,x, y, a, b) {
+        cxt.save();
+        cxt.fillStyle = "rgba(255,255,255, 0.4)";
+        cxt.fillRect(x, y, a, b);
+        cxt.stroke();
+        cxt.restore();
+    }
+
+
+</script>
+
+</body>
+</html>

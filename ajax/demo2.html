@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+<title>getJSON获取数据</title>
+    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<style type="text/css">
+    #divframe{ border:1px solid #999; width:500px; margin:0 auto;}
+    .loadTitle{ background:#CCC; height:30px;}
+</style>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#button').click(function(){
+            $.ajax({
+                type:"GET",
+                url:"demo_ajax_load.json",
+                dataType:"json",
+                success:function(data){
+                    console.log(data)
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</head>
+<body>
+<div id="divframe">
+    <div class="loadTitle">
+        <input type="button" value="获取数据" id="button"/>
+    </div>
+    <div id="jsonTip">
+    </div>
+</div>
+</body>
+</html>
