@@ -1,0 +1,760 @@
+html, body, div {
+	margin: 0;
+	padding: 0;
+	font-family:"Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+}
+input, select, textarea {
+	font-family: 微软雅黑;
+	font-size: 30px;
+	color: gray;
+}
+.toplogosmall {
+	position: absolute;
+	z-index: 2;
+	left: 195px;
+	top: 20px;
+}
+#smalllogo {
+	-webkit-animation: smalldown 1s;
+}
+@-webkit-keyframes smalldown {
+ 0% {
+top:-265px;
+}
+ 100% {
+top:20px;
+}
+}
+.pageword {
+	-webkit-animation: wordfade 2s;
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-delay: 1s;
+	opacity:0;
+}
+@-webkit-keyframes wordfade {
+ 0% {
+opacity:0;
+}
+ 100% {
+opacity:1;
+}
+}
+.somethingbig {
+	-webkit-animation: big 1s;
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-delay: 2s;
+}
+@-webkit-keyframes big {
+ 0% {
+-webkit-transform:scale(0, 0);
+opacity:0;
+}
+ 100% {
+-webkit-transform:scale(1, 1);
+opacity:1;
+}
+}
+.send {
+	position: absolute;
+	z-index: 10;
+	left: 228px;
+	top: 800px;
+	opacity: 0
+}
+#sendanim {
+	-webkit-animation: sendout 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-delay: 1s;
+}
+@-webkit-keyframes sendout {
+ 0% {
+-webkit-transform:scale(3, 3);
+opacity:1
+}
+ 100% {
+-webkit-transform:scale(1, 1);
+opacity:1
+}
+}
+#superContainer {
+	height: 1136px;
+	position: relative;
+}
+.section {
+	position: relative;
+}
+.section {
+	display: table;
+	width: 640px;
+}
+#big_C {
+	position: fixed;
+	_position: absolute;
+	z-index:99;
+	width: 48px;
+	height: 462px;
+	left: 480px;
+	bottom:-180px;
+	background: url(../images/tree.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+#big_D {
+	position: fixed;
+	_position: absolute;
+	z-index:99;
+	width: 48px;
+	height: 462px;
+	left: 480px;
+	bottom:-250px;
+	background: url(../images/tree.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+.buttomtreeanim{
+	-webkit-animation:buttomtree 1s;
+	-webkit-animation-delay:10s;
+	-webkit-animation-fill-mode:forwards;
+	-webkit-animation-timing-function:ease;
+	opacity:0;
+	}
+@-webkit-keyframes buttomtree
+{
+	from{ bottom:-462px; opacity:0;}
+	to{ bottom:0xp; opacity:1;}
+	}
+	
+.buttomtreeanim02{
+	-webkit-animation:buttomtree02 1s;
+	-webkit-animation-delay:4.5s;
+	-webkit-animation-fill-mode:forwards;
+	-webkit-animation-timing-function:ease;
+	opacity:0;
+	}
+@-webkit-keyframes buttomtree02
+{
+	from{ bottom:-462px; opacity:0;}
+	to{ bottom:0xp; opacity:1;}
+	}
+/*page1-1*/
+#p1bg {
+	position: absolute;
+	z-index: 1;
+}
+#biglogo {
+	position: absolute;
+	z-index: 2;
+	top: 80px;
+	left: 98px;
+}
+#p1tree {
+	position: absolute;
+	z-index: 3;
+	top: 911px;
+	left: 510px;
+}
+#p1Leaf1 {
+	position: absolute;
+	z-index: 4;
+	top: 970px;
+	left: 455px;
+}
+#p1Leaf2 {
+	position: absolute;
+	z-index: 5;
+	top: 1020px;
+	left: 455px;
+}
+#p1Leaf3 {
+	position: absolute;
+	z-index: 6;
+	top: 1070px;
+	left: 455px;
+}
+/*page1-2*/
+#p1leaf01 {
+	margin-top: 80px;
+	margin-left: -80px;
+}
+.p1leaf0203 {
+	margin-left: -80px;
+}
+.p1leaf0303 {
+	margin-left: -80px;
+	margin-bottom:-120px;
+}
+.p1leaf0304 {
+	margin-left: -80px;
+	margin-bottom:-170px;
+}
+/*animation1-2-1*/
+#twobg {
+	position: relative;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+#car01 {
+	position: absolute;
+	z-index: 2;
+	top: 0px;
+	left: 0px;
+	-webkit-animation: caroutone 1s;
+	-webkit-animation-delay: 1s;
+	-webkit-animation-fill-mode: forwards;
+}
+@-webkit-keyframes caroutone {
+ 0% {
+left:0px;
+}
+ 100% {
+left:650px;
+}
+}
+#toplogo01 {
+	position: absolute;
+	z-index: 3;
+	top: 0px;
+	left: 23px;
+	-webkit-animation: toplogoanims 1s;
+	-webkit-animation-fill-mode: forwards;
+}
+@-webkit-keyframes toplogoanims {
+ 0% {
+top:0px; opacity:0
+}
+ 100% {
+top:350px; opacity:1
+}
+}
+.section1 car {
+	position: absolute;
+	top: 250px;
+	left: -100%;
+}
+.section1 toplogo {
+	position: absolute;
+	z-index: 3;
+	top: 0px;
+	left: 0px;
+	opacity: 1
+}
+#handscss
+{ position:absolute; z-index:4; -webkit-animation:hands 1s infinite; top:800px; left:280px; -webkit-animation-direction:alternate; -webkit-animation-timing-function:ease-in-out}
+@-webkit-keyframes hands
+{
+	0%{ top:800px; opacity:1;}
+	100%{ top:830px; opacity:0;}
+	}
+	
+#handscss02
+{ position:absolute; z-index:6; -webkit-animation:hands 1s infinite; top:800px; left:280px; -webkit-animation-direction:alternate; -webkit-animation-timing-function:ease-in-out}
+@-webkit-keyframes hands
+{
+	0%{ top:800px; opacity:1;}
+	100%{ top:830px; opacity:0;}
+	}
+/*animation1-2-2*/
+#threebg {
+	position: relative;
+	z-index: 6;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+#toplogosmall01 {
+	position: absolute;
+	z-index: 8;
+	top: 20px;
+	left: 195px;
+}
+#map01 {
+	position: absolute;
+	z-index: 1;
+	top: 406px;
+	left: 0;
+	width: 100%;
+}
+#map02 {
+	position: absolute;
+	z-index: 2;
+	top: 406px;
+	left: 0;
+	width: 100%;
+}
+#map03 {
+	position: absolute;
+	z-index: 3;
+	top: 406px;
+	left: 0;
+	width: 100%;
+}
+#map04 {
+	position: absolute;
+	z-index: 4;
+	top: 406px;
+	left: 0;
+	width: 100%;
+}
+#map05 {
+	position: absolute;
+	z-index: 5;
+	top: 406px;
+	left: 0;
+	width: 100%;
+}
+#heart01 {
+	position: absolute;
+	z-index: 9;
+	top: 440px;
+	left:280px;		
+}
+#heart01text
+{
+	position: absolute;
+	z-index: 9;
+	top: 520px;
+	left: 133px;
+	}
+#car02 {
+	position: absolute;
+	z-index: 7;
+	bottom: 800px;
+	left: 22px;
+}
+.section2 smalllogo {
+	position: absolute;
+	z-index: 8;
+	top: -265px;
+	opacity: 0;
+}
+.section2 heart {
+	position: absolute;
+	z-index: 9;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+.section2 car {
+	position: absolute;
+	z-index: 7;
+	left: -100%;
+}
+.section2 mapo {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+.section2 mapt {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+.section2 maptr {
+	position: absolute;
+	z-index: 3;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+.section2 mapf {
+	position: absolute;
+	z-index: 4;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+.section2 mapfi {
+	position: absolute;
+	z-index: 5;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+/*animation1-2-3*/
+#fourbg {
+	position: relative;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+#toplogosmall02 {
+	position: absolute;
+	z-index: 2;
+	top: 20px;
+	left: 195px;
+}
+#time {
+	position: absolute;
+	z-index: 3;
+}
+#true {
+	position: absolute;
+	z-index: 4;
+	top: 630px;
+	left: 61px;
+}
+#false {
+	position: absolute;
+	z-index: 5;
+	top: 630px;
+	left: 378px;
+}
+.section3 smalllogo {
+	position: absolute;
+	z-index: 3;
+	top: -265px;
+	opacity: 0;
+}
+.section3 times {
+	position: absolute;
+	z-index: 3;
+	top: 260px;
+	left: 82px;
+	opacity: 0;
+}
+.section3 true {
+	position: absolute;
+	z-index: 4;
+	top: 0;
+	left: -20px;
+	opacity: 0;
+}
+.section3 false {
+	position: absolute;
+	z-index: 5;
+	top: 0;
+	left: 20px;
+	opacity: 0;
+}
+/*page2-1*/
+#p2bg {
+	position: absolute;
+	z-index: 1;
+	top:0;
+	left:0;
+}
+#wel {
+	position: absolute;
+	z-index: 2;
+	left: 155px;
+	top: 200px;
+}
+#woman {
+	position: absolute;
+	z-index: 3;
+	left: 70px;
+	top: 400px;
+	background-image:url(../images/woman.png); 
+	width:196px; 
+	height:179px; 
+	background-position:196px;
+
+}
+#choose1
+{
+	position: absolute;
+	z-index: 5;
+	left: 30px;
+	top: 560px;
+	background-image:url(../images/choose.png); 
+	width:51px; 
+	height:50px; 
+	background-position:51px;	
+	}
+#choose2
+{
+	position: absolute;
+	z-index: 5;
+	left: 350px;
+	top: 560px;
+	background-image:url(../images/choose.png); 
+	width:51px; 
+	height:50px; 
+	background-position:0px;	
+	}
+#womantxt {
+	position: absolute;
+	z-index: 6;
+	left: 190px;
+	top: 640px;
+	border: none;
+	height: 40px;
+	width: 260px;
+	border-radius:5px;
+	box-shadow:1px 1px 10px gray;
+	-ms-box-shadow:1px 1px 10px gray;
+}
+#manselect {
+	position: absolute;
+	z-index: 6;
+	left: 190px;
+	top: 700px;
+	border: none;
+	height: 40px;
+	width: 260px;
+	border-radius:5px;
+	box-shadow:1px 1px 10px gray;
+	-ms-box-shadow:1px 1px 10px gray;
+}
+#man {
+	position: absolute;
+	z-index: 4;
+	left: 390px;
+	top: 400px;
+	background-image:url(../images/man.png); 
+	width:196px; 
+	height:177px; 
+	background-position:196px;
+}
+#who {
+	position: absolute;
+	z-index: 2;
+	left: 271px;
+	top: 500px;
+}
+#eng-who {
+	position: absolute;
+	z-index: 2;
+	left: 243px;
+	top: 500px;
+}
+#womans {
+	position: absolute;
+	z-index: 4;
+	left: 100px;
+	top: 570px;
+}
+#mans {
+	position: absolute;
+	z-index: 4;
+	left: 420px;
+	top: 570px;
+}
+#eng-womans {
+	position: absolute;
+	z-index: 4;
+	left: 80px;
+	top: 560px;
+}
+#eng-mans {
+	position: absolute;
+	z-index: 4;
+	left: 400px;
+	top: 560px;
+}
+/*page2-2*/
+#sweet {
+	position: absolute;
+	z-index: 2;
+	left: 82px;
+	top: 230px;
+}
+#party {
+	position: absolute;
+	z-index: 4;
+	left: 121px;
+	top: 230px;
+}
+@-webkit-keyframes partytext
+{
+	0%{ left:-500px;}
+	100%{ left:0px;}
+	}
+#sucec {
+	position: absolute;
+	z-index: 3;
+	left: 133px;
+	top: 400px;
+}
+#beer {
+	position: absolute;
+	z-index: 3;
+	left: 0px;
+	top: 0px;
+}
+#woodcar {
+	position: absolute;
+	z-index: 4;
+	left: 53px;
+	top: 700px;
+	opacity: 0
+}
+/*page3-1*/
+#p3bg {
+	position: absolute;
+	z-index: 1;
+}
+#sorry {
+	position: absolute;
+	z-index: 3;
+	left: 176px;
+	top: 400px;
+}
+#sorryinput {
+	position: absolute;
+	z-index: 4;
+	top: 455px;
+	left: 100px;
+	border: none;
+	width: 440px;
+	height: 300px;
+}
+/*page3-2*/
+#sendtrue {
+	position: absolute;
+	z-index: 2;
+	left: 198px;
+	top: 450px;
+}
+
+
+#page {
+  width: 960px;
+  margin: 0 auto;
+}
+#viewport, #box, .slide {
+  width: 680px;
+  height: 460px;
+}
+
+/*loading*/
+
+.spinner {
+	color:red;
+	
+	font-family:隶书;
+	
+	font-size:65px;
+	
+	
+  display:block;
+
+  width: 60px;
+
+  height: 60px;
+
+  background-color:white;
+  
+  margin-top:300px;
+  
+  margin-bottom:auto;
+  
+  margin-left:auto;
+  
+  margin-right:auto;
+  
+  -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+
+  animation: rotateplane 1.2s infinite ease-in-out;
+  
+  -webkit-animation-direction:alternate;
+  
+  animation-direction:alternate;
+
+}
+
+ 
+
+@-webkit-keyframes rotateplane {
+
+  0% { -webkit-transform: perspective(120px) }
+
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+
+}
+
+ 
+
+@keyframes rotateplane {
+
+  0% { 
+
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+
+  } 50% { 
+
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+
+  } 100% { 
+
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+
+  }
+
+}
+
+
+/*图片轮播*/
+#pic01{-webkit-animation:pic01out 2s; opacity:0; -webkit-animation-fill-mode:forwards;  position:absolute;top:0; left:0; -webkit-transform-origin:right;}
+@-webkit-keyframes pic01out
+{
+	0%{ -webkit-transform:scale(2,2);}
+	100%{ -webkit-transform:scale(1,1); opacity:1;}
+	}
+#pic02{-webkit-animation:pic02out 2s; opacity:0; -webkit-animation-delay:3s; -webkit-animation-fill-mode:forwards; -webkit-transform-origin:left;  position:absolute;top:0; left:0;}
+@-webkit-keyframes pic02out
+{
+	0%{ -webkit-transform:scale(2,2);}
+	100%{ -webkit-transform:scale(1,1); opacity:1;}
+	}
+#pic03{-webkit-animation:pic03out 2s; opacity:0; -webkit-animation-delay:6s; -webkit-animation-fill-mode:forwards;  position:absolute;top:0; left:0; -webkit-transform-origin:right;}
+@-webkit-keyframes pic03out
+{
+	0%{ -webkit-transform:scale(2,2);}
+	100%{ -webkit-transform:scale(1,1); opacity:1;}
+	}
+#pic04{-webkit-animation:pic04out 2s; opacity:0; -webkit-animation-delay:9s; -webkit-animation-fill-mode:forwards;  position:absolute;top:0; left:0;}
+@-webkit-keyframes pic04out
+{
+	0%{ opacity:0;}
+	100%{ opacity:1;}
+	}
+
+
+
+/*发送页面动画*/
+@-webkit-keyframes sendanimas
+{
+	0%{ -webkit-transform:rotate(0deg) scale(1,1) translate(0,0);}
+	100%{ -webkit-transform:rotate(50deg) scale(0,0) translate(1500px,3500px);}
+	}
+@-webkit-keyframes sendbtnrt
+{
+	0%{-webkit-transform:rotateY(0deg); opacity:1;}
+	100%{ -webkit-transform:rotateY(360deg); opacity:0;}
+	}
+@-webkit-keyframes toplogo01animas
+{
+	0%{  top:-265px}
+	100%{ top:20px;}
+	}
+@-webkit-keyframes pageouts
+{
+	0%{opacity:0;}
+	100%{opacity:1;}
+	}
+@-webkit-keyframes woodcarbig {
+ 0% {
+-webkit-transform:scale(0, 0);
+opacity:0;
+}
+ 100% {
+-webkit-transform:scale(1, 1);
+opacity:1;
+}
+}

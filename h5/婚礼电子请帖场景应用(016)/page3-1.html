@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=640">
+<title>我们结婚了!</title>
+<link href="css/all-in-one.css" rel="stylesheet">
+<script src="js/Animaton.js"></script>
+<script>
+function initPage()   
+{   
+    var objLoading = document.getElementById("load");   
+    if (objLoading != null)   
+    {   
+        objLoading.style.display = "none"; 
+		document.getElementById("pageload").style.display = "block";
+    }   
+}  
+</script>
+</head>
+<body onLoad="initPage()" background="images/page3bg.png" style="background-repeat:no-repeat">
+<div id="load"><div style="width:640px; height:1136px; background-color:white; position:absolute;"><div class="spinner">囍</div><div style="width:100%; text-align:center"><br>
+Loadding...</div><div style=" width:100%; text-align:center; font-size:36px"><br>
+BRUCE&YOGA</div>
+<div style=" width:100%; text-align:center; font-size:24px;">MIX&MATCH</div></div>
+</div>
+<div style="display:none;" id="pageload">
+<div id="forsend">
+<img class="toplogosmall" id="smalllogo" src="images/toplogo-small.png">
+<img id="sweet" class="pageword" src="images/sweettext.png">
+<img id="sorry" class="pageword" src="images/sorry.png">
+<textarea id="sorryinput" class="pageword" onClick="value=''">送上我的祝福··· ···</textarea>
+</div>
+<img class="send" id="sendanim" src="images/send.png" onClick="send()">
+
+<img class="toplogosmall" id="toplogo01anima" style="display:none" src="images/toplogo-small.png">
+<div id="pageout" style="display:none;">
+<div id="big_D" class="buttomtreeanim02">
+<a href="Eng-page1-2.html"><img class="p1leaf0303" src="images/tree-eng.png"></a>
+<a href="page1-1.html"><img class="p1leaf0304" src="images/tree-replay.png"></a>
+</div>
+<div id="sweet"><img id="sweetanima" src="images/sweettext.png"></div>
+<div id="sendtrue"><img id="sucecanima" src="images/sendtrue.png"></div>
+</div>
+<img id="woodcaranima" style="display:none;" src="images/woodcar.png">
+</div>
+</body>
+</html>

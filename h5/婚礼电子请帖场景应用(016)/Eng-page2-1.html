@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=640">
+<title>We Are Getting Married!</title>
+<link href="css/all-in-one.css" rel="stylesheet">
+<script src="js/Animaton.js"></script>
+<script src="js/sexy.js"></script>
+<script>
+function initPage()   
+{   
+    var objLoading = document.getElementById("load");   
+    if (objLoading != null)   
+    {   
+        objLoading.style.display = "none"; 
+		document.getElementById("pageload").style.display = "block";
+    }   
+}  
+</script>
+</head>
+<body onLoad="initPage()" background="images/page2bg.png" style="background-repeat:no-repeat">
+<div id="load"><div style="width:640px; height:1136px; background-color:white; position:absolute;"><div class="spinner">囍</div><div style="width:100%; text-align:center"><br>
+Loadding...</div><div style=" width:100%; text-align:center; font-size:36px"><br>
+BRUCE&YOGA</div>
+<div style=" width:100%; text-align:center; font-size:24px;">MIX&MATCH</div></div>
+</div>
+<div style="display:none;" id="pageload">
+<div id="forsend">
+<img class="toplogosmall" id="smalllogo" src="images/eng-toplogo-small.png">
+<img id="sweet" class="pageword" style="margin-left:-15px;" src="images/eng-sweettext.png">
+<input id="womantxt" class="pageword" type="text">
+<select id="manselect" class="pageword"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+<div id="woman" class="pageword"></div>
+<div id="man" class="pageword"></div>
+<div id="choose1" class="pageword" onClick="sexCheck(1)"></div>
+<div id="choose2" class="pageword" onClick="sexCheck(2)"></div>
+<img id="eng-who" class="pageword" src="images/eng-youare.png">
+<div id="eng-womans" class="pageword" onClick="sexCheck(1)"><img src="images/eng-womans.png"></div>
+<div id="eng-mans" class="pageword" onClick="sexCheck(2)"><img src="images/eng-mans.png"></div>
+</div>
+<img class="send" id="sendanim" src="images/eng-send.png" onClick="send()">
+
+<img class="toplogosmall" id="toplogo01anima" style="display:none;" src="images/eng-toplogo-small.png">
+<div id="pageout" style="display:none;">
+<div id="big_D" class="buttomtreeanim02">
+<a href="page1-2.html"><img class="p1leaf0303" src="images/tree-cn.png"></a>
+<a href="index.html"><img class="p1leaf0304" src="images/tree-replay.png"></a>
+</div>
+<div id="party" style="margin-left:-20px;"><img src="images/Eng-sucecsful.png"></div>
+<div id="beer"><img src="images/beerlight.png"></div>
+</div>
+</div>
+</body>
+</html>
