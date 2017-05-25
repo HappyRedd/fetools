@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var maxtime = 120//2分钟，按秒计算，自己调整!
+    var minutes,seconds,time;
+    function CountDown(){
+        if(maxtime>=0){
+            minutes = Math.floor(maxtime/60);
+            seconds = Math.floor(maxtime%60);
+            time = "距离结束还有"+minutes+"分"+seconds+"秒";
+            document.all["timer"].innerHTML=time;
+            if(maxtime == 1*60) alert('注意，还有1分钟!');
+            --maxtime;
+        }
+        else{
+            clearInterval(timer);
+            alert("时间到，结束!");
+        }
+    }
+    timer = setInterval("CountDown()",100);
+</script>
+<div id="timer" style="color:red"></div>
+</body>
+</html>
