@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //inherit  create object 通过原型几成创建一个新对象
+    //使用ES5中的Object.create(),如果不从在，则退化使用其他方法实现
+
+    function inherit(p){
+        if(p == null) throw TypeError();
+        if(Object.create)
+        {
+            return Object.create(p);
+        }
+        var t = typeof  p;
+        if(t != "object" && t != "function") throw TypeError();
+        function f(){};
+        f.prototype = p;
+        return new f();
+    }
+
+    var obj = {a:1,b:100};
+    inherit(obj);
+    console.log(obj.b);
+</script>
+</body>
+</html>
