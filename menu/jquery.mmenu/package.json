@@ -1,0 +1,97 @@
+{
+  "_args": [
+    [
+      "jquery.mmenu",
+      "E:\\webdemo\\jQuerymeun"
+    ]
+  ],
+  "_from": "jquery.mmenu@latest",
+  "_id": "jquery.mmenu@5.7.8",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/jquery.mmenu",
+  "_nodeVersion": "5.1.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/jquery.mmenu-5.7.8.tgz_1479030167990_0.9824223918840289"
+  },
+  "_npmUser": {
+    "email": "info@frebsite.nl",
+    "name": "fredheusschen"
+  },
+  "_npmVersion": "3.3.12",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "jquery.mmenu",
+    "raw": "jquery.mmenu",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/jquery.mmenu/-/jquery.mmenu-5.7.8.tgz",
+  "_shasum": "b27f270266da0541c5374c87b930866237df3f1a",
+  "_shrinkwrap": null,
+  "_spec": "jquery.mmenu",
+  "_where": "E:\\webdemo\\jQuerymeun",
+  "author": {
+    "email": "info@frebsite.nl",
+    "name": "Fred Heusschen"
+  },
+  "bugs": {
+    "url": "https://github.com/FrDH/jQuery.mmenu/issues"
+  },
+  "dependencies": {},
+  "description": "The best jQuery plugin for app look-alike on- and off-canvas menus with sliding submenus for your website and webapp.",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.13",
+    "gulp-concat": "^2.6.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass": "^2.0.6",
+    "gulp-uglify": "^1.5.1",
+    "gulp-umd": "^0.2.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "b27f270266da0541c5374c87b930866237df3f1a",
+    "tarball": "https://registry.npmjs.org/jquery.mmenu/-/jquery.mmenu-5.7.8.tgz"
+  },
+  "gitHead": "b4795fe4eeb77a32a742f3313493a29d8de12b7f",
+  "homepage": "https://github.com/FrDH/jQuery.mmenu#readme",
+  "keywords": [
+    "app",
+    "list",
+    "listview",
+    "megamenu",
+    "menu",
+    "mmenu",
+    "mobile",
+    "navigation",
+    "off-canvas",
+    "on-canvas",
+    "panels",
+    "submenu"
+  ],
+  "license": "CC-BY-NC-4.0",
+  "main": "dist/js/jquery.mmenu.all.min.umd.js",
+  "maintainers": [
+    {
+      "email": "info@frebsite.nl",
+      "name": "fredheusschen"
+    }
+  ],
+  "name": "jquery.mmenu",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrDH/jQuery.mmenu.git"
+  },
+  "scripts": {},
+  "version": "5.7.8"
+}
